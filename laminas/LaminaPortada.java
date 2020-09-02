@@ -30,8 +30,12 @@ public class LaminaPortada extends JPanel {
 		this.laminaJuego = laminaJuego;
 	}
 
-	private void inicializaComponentesPortada() { ;
-		JLabel labelFoto = new JLabel(new ShrinkIcon("src/img/floodit.png"));
+	private void inicializaComponentesPortada() { 
+		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+		//pantalla = new Dimension(1366, 768);
+		ImageIcon icono = pantalla.height > 1000 ? new ShrinkIcon("src/img/floodit.png") 
+				: new ShrinkIcon("src/img/flooditchico.png");
+		JLabel labelFoto = new JLabel(icono);
 		add(labelFoto, BorderLayout.CENTER);
 		//-------------------------------------Combo Jugador----------------------------------
 		tipoJugador = new JComboBox<String>();
@@ -54,7 +58,7 @@ public class LaminaPortada extends JPanel {
 		cajaNorth.add(tipoJugador);
 		//----------------------------------Label Título-------------------------------------
 		JLabel titulo = new JLabel("Flood It");
-		titulo.setFont(new Font("Roboto", Font.PLAIN, 30));
+		titulo.setFont(new Font("Roboto", Font.PLAIN, frame.getWidth() / 11));
 		titulo.setForeground(Color.BLUE);
 		cajaNorth.add(Box.createHorizontalGlue());
 		cajaNorth.add(titulo);

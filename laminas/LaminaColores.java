@@ -111,6 +111,7 @@ public class LaminaColores extends JPanel {
 		//------------------------------------JLIST---------------------------------------------
 		listaColores = new JList<String>();
 		listaColores.setVisibleRowCount(5);
+		listaColores.setFixedCellWidth(135);
 		listaColores.addListSelectionListener(new ListSelectionListener() {
 
 			public void valueChanged(ListSelectionEvent e) {
@@ -131,7 +132,7 @@ public class LaminaColores extends JPanel {
 		boxHorizontales[1].add(labelPaletaSelec);
 		//--------------------------------BOTON SELECCIONAR--------------------------------------
 		btnSelec = new JButton("Usar paleta seleccionada");
-		btnSelec.setMinimumSize(new Dimension(200,25));
+		btnSelec.setMinimumSize(new Dimension(frame.getWidth() / 2,25));
 		btnSelec.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int[] seleccionados = listaColores.getSelectedIndices();
@@ -185,11 +186,11 @@ public class LaminaColores extends JPanel {
 
 		});
 		btnCreado = true;
-		btnCrear.setMinimumSize(new Dimension(200,25));
+		btnCrear.setMinimumSize(new Dimension(frame.getWidth() / 2,25));
 		panelBtn.add(btnCrear);
 		//-----------------------------------------BOTÓN BORRAR-----------------------------------------
 		btnBorrar = new JButton("Borrar seleccionado/s");
-		btnBorrar.setPreferredSize(new Dimension(200,25));
+		btnBorrar.setPreferredSize(new Dimension(frame.getWidth() / 2,25));
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int respuesta = JOptionPane.showConfirmDialog(null, "¿Está Seguro?", "Aviso", JOptionPane.INFORMATION_MESSAGE);
@@ -206,7 +207,7 @@ public class LaminaColores extends JPanel {
 		panelBtn.add(btnBorrar);
 		//--------------------------------------BOTON SELEC TODOS--------------------------------------
 		JButton btnSelecAll = new JButton("Seleccionar Todos");
-		btnSelecAll.setPreferredSize(new Dimension(200,25));
+		btnSelecAll.setPreferredSize(new Dimension(frame.getWidth() / 2,25));
 		btnSelecAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actualizaBotones(false);
@@ -216,7 +217,7 @@ public class LaminaColores extends JPanel {
 		panelBtn.add(btnSelecAll);
 		//------------------------------------BOTON DE-SELEC TODOS--------------------------------------
 		JButton btnDeSelecAll = new JButton("Deseleccionar Todos");
-		btnDeSelecAll.setPreferredSize(new Dimension(200,25));
+		btnDeSelecAll.setPreferredSize(new Dimension(frame.getWidth() / 2,25));
 		btnDeSelecAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				actualizaBotones(false);
@@ -226,7 +227,7 @@ public class LaminaColores extends JPanel {
 		panelBtn.add(btnDeSelecAll);
 		//-----------------------------------BOTON RENOMBRAR--------------------------------------------
 		btnRename = new JButton("Renombrar Seleccionado");
-		btnRename.setPreferredSize(new Dimension(200,25));
+		btnRename.setPreferredSize(new Dimension(frame.getWidth() / 2,25));
 		btnRename.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nuevoNombre;

@@ -216,7 +216,7 @@ public class LaminaConfig extends JPanel {
 				frame.cambiaLamina(Frame.PORTADA);
 			}
 		});
-		cajas[0].add(Box.createHorizontalStrut(frame.getWidth() / 15));
+		cajas[0].add(Box.createHorizontalGlue());
 		cajas[0].add(btnVolver);
 		//-----------------------BOTON CAMBIA ARCHIVO HS-----------------------------------------
 		btnCambiaArchivo = new JButton("Cambiar Archivo HS");

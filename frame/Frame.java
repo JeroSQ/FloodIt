@@ -23,7 +23,7 @@ public class Frame extends JFrame {
 	public static final int INFO = 4;
 	public static final int STATS = 5;
 
-	public Frame() { // Se usa un JScrollPane para cambiar las láminas
+	public Frame() { 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension pantalla = toolkit.getScreenSize();
 		//pantalla = new Dimension(1366, 768);

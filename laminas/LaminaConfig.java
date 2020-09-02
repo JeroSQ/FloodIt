@@ -1,0 +1,427 @@
+package laminas;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.event.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
+import java.util.Enumeration;
+import frame.Frame;
+import juego.*;
+
+public class LaminaConfig extends JPanel {
+
+	private Frame frame;
+	private JButton btnCambiaArchivo, btnVerPromedios, btnVerArchivo, btnResetTodo, btnPredeterminado,
+		btnPaleta, btnCustom;
+	private JCheckBox boxSonido, btnTimer;
+	private JLabel labelShape, labelEsquina;
+	private Border bordeBtnCustom;
+	private JSpinner spinnerShape;
+	private String pathRoot = "src/img/";
+	private String pathFormat = ".png";
+	private Configuraciones config;
+	private ButtonGroup grupoPaleta;
+	private Box[] cajas = new Box[11];
+
+	public LaminaConfig(Frame frame, Configuraciones config) {
+		setBackground(Color.CYAN.darker());
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight()));
+		this.frame = frame;
+		this.config = config;
+		for(int i = 0; i < cajas.length; i++){
+			cajas[i] = Box.createHorizontalBox();
+		}
+		inicializaComponentesConfig();
+		for(int i = 0; i < cajas.length; i++){
+			add(cajas[i]);
+			add(Box.createVerticalGlue());
+		}
+	}
+	
+	public void actualizaBotones() {
+		boolean betaTester = config.isBetaTester();
+		btnVerArchivo.setEnabled(betaTester);
+		btnCambiaArchivo.setEnabled(betaTester);
+		btnVerPromedios.setEnabled(betaTester);
+		btnResetTodo.setEnabled(betaTester);
+		Enumeration<AbstractButton> elementos = grupoPaleta.getElements();
+		while (elementos.hasMoreElements()) {
+			AbstractButton btnActual = elementos.nextElement();
+			Border borde = btnActual.getActionCommand().equals(Integer.toString(config.getPaletaColorIndex()))
+					? BorderFactory.createLineBorder(Color.BLACK, 2)
+							: BorderFactory.createLineBorder(Color.CYAN.darker(), 2);
+					btnActual.setBorder(borde);
+		}
+		if(config.getPaletaColorIndex() > 5)
+			btnCustom.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		else
+			btnCustom.setBorder(BorderFactory.createLineBorder(new Color(178,178,178), 2));
+	}
+
+	private void inicializaComponentesConfig() {
+		for(int i = 0; i < cajas.length; i++)
+			cajas[i].removeAll();
+		creaCompGenerales();
+		creaBotonesSize();
+		creaBotonesEsq();
+		creaBotonesPaleta();
+		creaLabels();
+		agnadeBotonesDesordenados();
+		updateUI();
+	}
+
+	private void creaBotonesSize() {
+		int x = 5;
+		int y = 125;
+		int tamx = 60;
+		int tamy = 20;
+		int tamagnos[] = new int[] { 10, 12, 15, 20, 25 };
+		ButtonGroup grupoTam = new ButtonGroup();
+		for (int i = 0; i < tamagnos.length; i++) {
+			JRadioButton btn = new JRadioButton(Integer.toString(tamagnos[i]));
+			btn.setBackground(Color.CYAN.darker());
+			grupoTam.add(btn);
+			btn.setSelected(tamagnos[i] == config.getTamagnoCuadro());
+			btn.addActionListener(new ActionListener() {
+
+				public void actionPerformed(ActionEvent e) {
+					config.setTamagnoCuadro(Integer.parseInt(btn.getText()));
+				}
+			});
+			cajas[4].add(Box.createHorizontalGlue());
+			cajas[4].add(btn);
+			x += 60;
+		}
+		cajas[4].add(Box.createHorizontalGlue());
+	}
+
+	private void creaBotonesEsq() {
+		ButtonGroup grupoEsquina = new ButtonGroup();
+		int x = 50;
+		int y = 325;
+		int tamx = 50;
+		int tamy = 24;
+		for (int i = 0; i < 4; i++) {
+			JRadioButton btn = new JRadioButton(
+					new ImageIcon(pathRoot + Integer.toString(i) + pathFormat));
+			btn.setBackground(Color.CYAN.darker());
+		//	btn.setBounds(x, y, tamx, tamy);
+			grupoEsquina.add(btn);
+			btn.setName(Integer.toString(i));
+			btn.addActionListener(new ActionListener() {
+
+				public void actionPerformed(ActionEvent e) {
+					Enumeration<AbstractButton> elementos = grupoEsquina.getElements();
+					while (elementos.hasMoreElements()) {
+						AbstractButton btnActual = elementos.nextElement();
+						String pathFull = btnActual.isSelected()
+								? pathRoot + Integer.toString(Integer.parseInt(btnActual.getName()) + 4) 
+										+ pathFormat
+								: pathRoot + btnActual.getName() + pathFormat;
+						btnActual.setIcon(new ImageIcon(pathFull));
+						if (btnActual.isSelected())
+						config.setEsquinaCuadro(Integer.parseInt(btnActual.getName()));
+					}
+				}
+			});
+			btn.setSelected(i == config.getEsquinaCuadro());
+			if (btn.isSelected()) {
+				btn.setIcon(new ImageIcon(pathRoot
+						+ Integer.toString(Integer.parseInt(btn.getName()) + 4) + pathFormat));
+				config.setEsquinaCuadro(Integer.parseInt(btn.getName()));
+			}
+			cajas[10].add(Box.createHorizontalGlue());
+			cajas[10].add(btn);
+			x += 55;
+		}
+		cajas[10].add(Box.createHorizontalGlue());
+	}
+
+	private void creaBotonesPaleta() {
+		int counter = 0;
+		grupoPaleta = new ButtonGroup();
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 2; j++) {
+				String pathFull = pathRoot + "paleta" + Integer.toString(counter) + pathFormat;
+				btnPaleta = new JButton();
+				btnPaleta.setActionCommand(Integer.toString(counter));
+			//	btnPaleta.setBounds(x, y, tamx, tamy);
+				btnPaleta.setBorder(BorderFactory.createLineBorder(Color.CYAN.darker(), 2));
+				btnPaleta.setIcon(new ImageIcon(pathFull));
+				btnPaleta.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent e) {
+						int indexPaleta = Integer.parseInt(e.getActionCommand());
+						config.setPaletaColorIndex(indexPaleta);
+						config.setPaletaColor(GestorArchivos.getPaleta(indexPaleta));
+						actualizaBotones();
+						frame.llamaEliminaSeleccion();
+					}
+				});
+				btnPaleta.setSelected(counter == config.getPaletaColorIndex());
+				if (btnPaleta.isSelected())
+					btnPaleta.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+				grupoPaleta.add(btnPaleta);
+				if(j == 0) {
+					cajas[6].add(Box.createHorizontalGlue());
+					cajas[6].add(btnPaleta);
+				}else {
+					cajas[7].add(Box.createHorizontalGlue());
+					cajas[7].add(btnPaleta);
+				}
+				counter++;
+			}
+		}
+		cajas[6].add(Box.createHorizontalGlue());
+		cajas[7].add(Box.createHorizontalGlue());
+	}
+	
+	private void creaLabels() {
+		//----------------------------LABEL FORMA:----------------------------------------
+		labelShape = new JLabel("Forma:");
+	//	labelShape.setBounds(165, 5, 80, 25);
+		labelShape.setFont(new Font("Roboto", Font.PLAIN, 14));
+		//-----------------------LABEL TAMAÑO-----------------------------------------
+		JLabel labelTamagno = new JLabel("Tamaño del Cuadro");
+		labelTamagno.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		labelTamagno.setFont(new Font("Roboto", Font.PLAIN, 20));
+	//	labelTamagno.setBounds(60, 100, 200, 20);
+		cajas[3].add(labelTamagno);
+		//-----------------------LABEL COLORES PREDEF-----------------------------------------
+		JLabel labelColor = new JLabel("Colores Predefinidos");
+		labelColor.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		labelColor.setFont(new Font("Roboto", Font.PLAIN, 20));
+	//	labelColor.setBounds(55, 150, 200, 20);
+		cajas[5].add(labelColor);
+		//-----------------------LABEL ESQUINA INICIO-----------------------------------------
+		labelEsquina = new JLabel("Esquina de Inicio");
+		labelEsquina.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		labelEsquina.setFont(new Font("Roboto", Font.PLAIN, 20));
+	//	labelEsquina.setBounds(75, 295, 200, 25);
+		
+	}
+	
+	private void creaCompGenerales() {
+		//---------------------------BOTON VOLVER-----------------------------------------
+		JButton btnVolver = new JButton("Volver");
+	//	btnVolver.setBounds(8, 5, 80, 25);
+		btnVolver.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.PORTADA);
+			}
+		});
+		cajas[0].add(Box.createHorizontalStrut(frame.getWidth() / 15));
+		cajas[0].add(btnVolver);
+		//-----------------------BOTON CAMBIA ARCHIVO HS-----------------------------------------
+		btnCambiaArchivo = new JButton("Cambiar Archivo HS");
+	//	btnCambiaArchivo.setBounds(153, 65, 140, 25);
+		btnCambiaArchivo.setEnabled(false);
+		btnCambiaArchivo.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = null;
+				try {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				chooser = new JFileChooser(config.getArchivoStats());
+				UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
+				}catch(Exception e2) {
+					e2.printStackTrace();
+				}
+				chooser.setFileFilter(new FileNameExtensionFilter(".txt", "txt"));
+				int seleccion = chooser.showSaveDialog(frame);
+				File file = chooser.getSelectedFile();
+				if(seleccion != 0)
+					return;
+				config.setArchivoStats(file);
+				if(GestorArchivos.isFileEmpty(file))
+					GestorArchivos.setEstadisticas(new TablaStats(), config);
+				else
+					GestorArchivos.setEstadisticas(GestorArchivos.getEstadisticas(config), config);
+				config.setTablaStats(GestorArchivos.getEstadisticas(config));
+			}
+		});
+		btnCambiaArchivo.setPreferredSize(new Dimension((frame.getWidth() / 2) - 20,
+				btnCambiaArchivo.getPreferredSize().height));
+		cajas[2].add(Box.createHorizontalGlue());
+		cajas[2].add(btnCambiaArchivo);
+		//-----------------------BOTON VER PROMEDIO-----------------------------------------
+		btnVerPromedios = new JButton("Ver Mov. Promedio");
+	//	btnVerPromedios.setBounds(8, 65, 140, 25);
+		btnVerPromedios.setEnabled(false);
+		btnVerPromedios.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnVerPromedios.setPreferredSize(new Dimension(btnCambiaArchivo.getPreferredSize()));
+		cajas[2].add(Box.createHorizontalGlue());
+		cajas[2].add(btnVerPromedios);
+		cajas[2].add(Box.createHorizontalGlue());
+		//-------------------------BOTON VER ARCHIVO HS-----------------------------------------
+		btnVerArchivo = new JButton("Ver Archivo HS");
+		//	btnVerArchivo.setBounds(153, 35, 140, 25);
+		btnVerArchivo.setEnabled(false);
+		btnVerArchivo.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "El archivo se encuentra en: " + config.getArchivoStats().getAbsolutePath());
+			}
+		});
+		btnVerArchivo.setPreferredSize(new Dimension(btnCambiaArchivo.getPreferredSize()));
+		cajas[1].add(Box.createHorizontalGlue());
+		cajas[1].add(btnVerArchivo);
+		//-------------------------BOTON RESET TODO.-----------------------------------------
+		btnResetTodo = new JButton("Resetear Todo");
+		//	btnResetTodo.setBounds(8, 35, 140, 25);
+		btnResetTodo.setEnabled(false);
+		btnResetTodo.setPreferredSize(btnCambiaArchivo.getPreferredSize());
+		btnResetTodo.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				int opcion = -1;
+				opcion = JOptionPane.showOptionDialog(null,
+						"¿Está seguro que quiere resetear todo el juego? No se puede volver atrás.", "Aviso",
+						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
+				if (opcion != 0)
+					return;
+				GestorArchivos.borraTodo();
+				btnPredeterminado.doClick();
+				frame.llamaActualizaColores();
+			}
+		});
+		cajas[1].add(Box.createHorizontalGlue());
+		cajas[1].add(btnResetTodo);
+		cajas[1].add(Box.createHorizontalGlue());
+		//-----------------------BOTON COLOR CUSTOM-----------------------------------------
+		btnCustom = new JButton("Elegir Colores Personalizados");
+		btnCustom.setBorder(BorderFactory.createLineBorder(new Color(178,178,178), 2));
+		btnCustom.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.COLORES);
+			}
+		});
+		cajas[8].add(btnCustom);
+		//-----------------------BOTON TIMER----------------------------------------------
+		btnTimer = new JCheckBox();
+		ImageIcon icon = config.isTimerOn() ? new ImageIcon(pathRoot + "timer" + pathFormat) 
+				: new ImageIcon(pathRoot + "timeroff" + pathFormat);
+		btnTimer.setIcon(icon);
+		btnTimer.setBorder(null);
+		btnTimer.setBackground(null);
+		btnTimer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ImageIcon icon = btnTimer.isSelected() ? new ImageIcon(pathRoot + "timer" + pathFormat) 
+						: new ImageIcon(pathRoot + "timeroff" + pathFormat);
+				btnTimer.setIcon(icon);
+				config.setTimer(btnTimer.isSelected());
+			}
+		});
+		//-----------------------CHECKBOX SONIDO---------------------------------------------
+		boxSonido = new JCheckBox(new ImageIcon("src/volume0.png"));
+		boxSonido.setSelected(config.isSonidoOn());
+		ImageIcon icono0 = new ImageIcon(pathRoot + "volume0" + pathFormat);
+		ImageIcon icono1 = new ImageIcon(pathRoot + "volume1" + pathFormat);
+		boxSonido.setIcon(boxSonido.isSelected() ? icono0 : icono1);
+		boxSonido.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				boxSonido.setIcon(boxSonido.isSelected() ? icono0 : icono1);
+				config.setSonido(boxSonido.isSelected());
+			}
+		});
+	//	boxSonido.setBounds(7, 295, 32, 32);
+		boxSonido.setBackground(Color.CYAN.darker());
+		//---------------------------BOTON RESET PREDETERMINADOS---------------------------
+		btnPredeterminado = new JButton("Reset");
+	//	btnPredeterminado.setBounds(93, 5, 55, 25);
+		btnPredeterminado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				config.setDefaultConfigs();
+				inicializaComponentesConfig();
+				frame.llamaEliminaSeleccion();
+			}
+		});
+		cajas[0].add(Box.createHorizontalGlue());
+		cajas[0].add(btnPredeterminado);
+		//---------------------------SPINNER SHAPE-----------------------------------------
+		String shapes[] = config.isFormaCuadrados() ? new String[] { "Cuadrados", "Círculos" }
+		: new String[] { "Círculos", "Cuadrados" };
+		SpinnerListModel modeloShape = new SpinnerListModel(shapes) {
+			
+			public Object getNextValue() {
+				String value = super.getValue().equals("Cuadrados") ? "Círculos" : "Cuadrados";
+				return value;
+			}
+			
+			public Object getPreviousValue() {
+				String value = super.getValue().equals("Cuadrados") ? "Círculos" : "Cuadrados";
+				return value;
+			}
+		};
+		spinnerShape = new JSpinner(modeloShape);
+	//	spinnerShape.setBounds(213, 5, 80, 25);
+		spinnerShape.setMaximumSize(new Dimension(frame.getWidth() / 6, 25));
+		spinnerShape.addChangeListener(new ChangeListener() {
+			
+			public void stateChanged(ChangeEvent e) {
+				config.setCuadrados(spinnerShape.getValue().equals("Cuadrados") ? true : false);
+			}
+		});
+		JFormattedTextField tf = ((JSpinner.DefaultEditor) spinnerShape.getEditor()).getTextField();
+		tf.setEditable(false);
+		//---------------------------------POP UP MENU-------------------------------------
+		JPopupMenu menu = new JPopupMenu();
+		JMenuItem info = new JMenuItem("Info");
+		info.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.INFO);
+			}
+			
+		});
+		JMenuItem config = new JMenuItem("Config");
+		config.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.CONFIG);
+			}
+			
+		});
+		JMenuItem stats = new JMenuItem("Estadísticas");
+		stats.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.STATS);
+			}
+			
+		});
+		menu.add(info);
+		menu.add(config);
+		menu.add(stats);
+		setComponentPopupMenu(menu);
+	}
+	
+	private void agnadeBotonesDesordenados() {
+		//CAJA 0-------------------
+		cajas[0].add(Box.createHorizontalGlue());
+		cajas[0].add(labelShape);
+		cajas[0].add(Box.createHorizontalGlue());
+		cajas[0].add(spinnerShape);
+		cajas[0].add(Box.createHorizontalGlue());
+		//CAJA 9--------------------
+		cajas[9].add(Box.createHorizontalGlue());
+		cajas[9].add(boxSonido);
+		cajas[9].add(Box.createHorizontalGlue());
+		cajas[9].add(labelEsquina);
+		cajas[9].add(Box.createHorizontalGlue());
+		cajas[9].add(btnTimer);
+		cajas[9].add(Box.createHorizontalGlue());
+	}
+}

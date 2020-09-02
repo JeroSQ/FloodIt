@@ -97,185 +97,6 @@ public class LaminaJuego extends JPanel {
 		paletaColores = config.getPaletaColor();
 	}
 
-	// checkea si un hay colores iguales en cualquier dirección de todos los colores
-	// y los añade
-	// al ArrayList indexes
-	private void checkColoresAlrededor(ArrayList<Color> colores, ArrayList<Integer> indexes) {
-		int longitudIndexes = indexes.size();
-		for (int j = 0; j < longitudIndexes; j++) {
-			if (indexes.get(j) < ((tamagnoCuadro * tamagnoCuadro) - 1)
-					&& !isBorder(indexes.get(j)).equals("downBorder")
-					&& colores.get(indexes.get(j)).equals(colores.get(indexes.get(j) + 1))) {
-				indexes.add(indexes.get(j) + 1);
-			}
-			if (indexes.get(j) > 0 && !isBorder(indexes.get(j)).equals("upBorder")
-					&& colores.get(indexes.get(j)).equals(colores.get(indexes.get(j) - 1))) {
-				indexes.add(indexes.get(j) - 1);
-			}
-			if (indexes.get(j) < ((tamagnoCuadro * tamagnoCuadro) - tamagnoCuadro) && colores
-					.get(indexes.get(j)).equals(colores.get(indexes.get(j) + tamagnoCuadro))) {
-				indexes.add(indexes.get(j) + tamagnoCuadro);
-			}
-			if (indexes.get(j) > tamagnoCuadro && colores.get(indexes.get(j))
-					.equals(colores.get(indexes.get(j) - tamagnoCuadro))) {
-				indexes.add(indexes.get(j) - tamagnoCuadro);
-			}
-		}
-	}
-
-	private void eliminaDuplicados(ArrayList<Integer> array) {
-		ArrayList<Integer> sinDuplicado = (ArrayList<Integer>) array.stream().distinct()
-				.collect(Collectors.toList());
-		array.clear();
-		array.addAll(sinDuplicado);
-	}
-
-	private void juegoGanado() { // Checkea si ganó y añade botones si es así
-		if (indexes.size() != tamagnoCuadro * tamagnoCuadro || movimientosRestantes < 0) 
-			return;
-		juegoGanado = true;
-		timer.stop();
-		actualizaStats();
-		lmnBtn.removeAll();
-		JButton btnReiniciar = new JButton("Reiniciar");
-		btnReiniciar.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				reiniciarJuego();
-			}
-		});
-		lmnBtn.add(btnReiniciar);
-		JButton btnVolver = new JButton("Volver al Menú");
-		btnVolver.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				frame.cambiaLamina(Frame.PORTADA);
-			}
-		});
-		lmnBtn.add(btnVolver);
-		JButton btnSalir = new JButton("Salir");
-		btnSalir.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				GestorArchivos.setLastConfig(config);
-				System.exit(0);
-			}
-		});
-		lmnBtn.add(btnSalir);
-	}
-
-	private void muestraGanado() { // Añade el texto ganado
-		if(!juegoGanado)
-			return;
-		juegoGanado = false;
-		JLabel ganaste = new JLabel("Ganaste!");
-		ganaste.setForeground(isColorDark(colorACambiar) ? Color.WHITE : Color.BLACK.brighter());
-		ganaste.setFont(new Font("Roboto", Font.BOLD, 48));
-		JLabel movs = new JLabel("Lo hiciste en " + (MOVIMIENTOS_INICIO - movimientosRestantes) + " movimientos");
-		movs.setForeground(isColorDark(colorACambiar) ? Color.WHITE : Color.BLACK.brighter());
-		movs.setFont(new Font("Roboto", 3, 15));
-		
-		Box cajaEnclose = Box.createHorizontalBox();
-		Box cajaFiller1 = Box.createHorizontalBox();
-		Box caja = Box.createVerticalBox();
-		Box cajaFiller2 = Box.createHorizontalBox();
-		
-		cajaFiller1.add(Box.createHorizontalGlue());
-		
-		caja.add(Box.createVerticalGlue());
-		caja.add(ganaste);
-		caja.add(movs);
-		caja.add(Box.createVerticalGlue());
-		caja.add(Box.createVerticalGlue());
-		
-		cajaFiller2.add(Box.createHorizontalGlue());
-		
-		cajaEnclose.add(cajaFiller1);
-		cajaEnclose.add(caja);
-		cajaEnclose.add(cajaFiller2);
-		
-		add(cajaEnclose, BorderLayout.CENTER);
-		updateUI();
-	}
-
-	private void checkeaMovimientos() { // Checkea si se quedó sin movimientos el jugador
-		if (movimientosRestantes > 0 || juegoGanado)
-			return;
-		timer.stop();
-		actualizaStats();
-		labelMovRest.setText("       Sin Movimientos!         ");
-		labelMovRest.setForeground(Color.RED);
-		String opciones[] = new String[] { "Reiniciar", "Volver al Menú", "Salir" };
-		int opcion = -1;
-		do {
-			opcion = (int) JOptionPane.showOptionDialog(null, "Sin Movimientos!", "Aviso",
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opciones,
-					null);
-		} while (opcion == -1);
-		switch (opcion) {
-			case 0:
-				Thread hilo = new Thread(new Runnable() {
-					public void run() {
-						reiniciarJuego();
-						try {
-							Thread.currentThread().join();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				});
-				hilo.start();
-				break;
-			case 1:
-				frame.cambiaLamina(Frame.PORTADA);
-				break;
-			case 2:
-				GestorArchivos.setLastConfig(config);
-				System.exit(0);
-				break;
-		}
-	}
-
-	private void hazUnMovimiento() {
-		for (int i = 0; i < indexes.size(); i++) { // Actualiza los colores del ArrayList
-			colores.set(indexes.get(i), colorACambiar);
-		}
-		for (int i = 0; i < 20; i++) {
-			checkColoresAlrededor(colores, indexes); // Checkea varias veces si hay nuevos colores
-														// para
-			eliminaDuplicados(indexes); // añadir al ArrayList
-		}
-		movimientosRestantes--;
-		labelMovRest.setText("Movimientos Restantes: " + Integer.toString(movimientosRestantes));
-		juegoGanado();
-		checkeaMovimientos();
-		repaint();
-		if(config.isSonidoOn() && !gameStarting)
-			playSound(new File("src/pop.wav").getAbsoluteFile());
-	}
-
-	private String isBorder(int x) { // Detecta si un valor del array pertence al borde del cuadro
-		if (x == 0 || x % tamagnoCuadro == 0)
-			return "upBorder";
-		if (((x + 1) % tamagnoCuadro) == 0)
-			return "downBorder";
-		return "";
-	}
-
-	private void actualizaCuadro(Graphics2D g2) {
-		pintaFondo(g2);
-		for (int i = 0; i < cuadros.size(); i++) {
-			g2.setColor(colores.get(i)); // Vuelve a pintar todos los Rectangle2D
-			g2.fill(cuadros.get(i));
-		}
-		for (int i = 0; i < indexes.size(); i++) {
-			colores.set(indexes.get(i), colorACambiar);
-			g2.setColor(colores.get(indexes.get(i))); // Pinta los Rectangle2D dentro de indexes
-			g2.fill(cuadros.get(indexes.get(i)));
-		}
-	}
-
 	private void inicializaComponentesJuego() { 
 		//-------------------------------------LABEL MOV REST----------------------------------------
 		cajaNorth.removeAll();
@@ -366,7 +187,7 @@ public class LaminaJuego extends JPanel {
 				quedaTiempo = false;
 				sinTiempo();
 			}
-
+	
 		});
 		
 		Box cajaNorthFinal = Box.createVerticalBox();
@@ -378,6 +199,7 @@ public class LaminaJuego extends JPanel {
 		creaBotonesColor();
 		add(lmnBtn, BorderLayout.SOUTH);
 	}
+
 	//-----------------------------------------BOTONES COLOR-----------------------------------------
 	private void creaBotonesColor() { // Crea 6 botones de colores que cambian el color
 		final int TAM_BOTON = 40;
@@ -388,7 +210,7 @@ public class LaminaJuego extends JPanel {
 			boton.setPreferredSize(new Dimension(TAM_BOTON, TAM_BOTON));
 			boton.setMnemonic(49 + i);
 			boton.addActionListener(new ActionListener() {
-
+	
 				public void actionPerformed(ActionEvent e) {
 					if (colorACambiar.equals(boton.getBackground()) || movimientosRestantes <= 0)
 						return;
@@ -402,7 +224,196 @@ public class LaminaJuego extends JPanel {
 		}
 		//----------------------------------------------------------------------------------------------
 	}
-	
+
+	private void actualizaCuadro(Graphics2D g2) {
+		pintaFondo(g2);
+		for (int i = 0; i < cuadros.size(); i++) {
+			g2.setColor(colores.get(i)); // Vuelve a pintar todos los Rectangle2D
+			g2.fill(cuadros.get(i));
+		}
+		for (int i = 0; i < indexes.size(); i++) {
+			colores.set(indexes.get(i), colorACambiar);
+			g2.setColor(colores.get(indexes.get(i))); // Pinta los Rectangle2D dentro de indexes
+			g2.fill(cuadros.get(indexes.get(i)));
+		}
+	}
+
+	// checkea si un hay colores iguales en cualquier dirección de todos los colores
+	// y los añade
+	// al ArrayList indexes
+	private void checkColoresAlrededor(ArrayList<Color> colores, ArrayList<Integer> indexes) {
+		int longitudIndexes = indexes.size();
+		for (int j = 0; j < longitudIndexes; j++) {
+			if (indexes.get(j) < ((tamagnoCuadro * tamagnoCuadro) - 1)
+					&& !isBorder(indexes.get(j)).equals("downBorder")
+					&& colores.get(indexes.get(j)).equals(colores.get(indexes.get(j) + 1))) {
+				indexes.add(indexes.get(j) + 1);
+			}
+			if (indexes.get(j) > 0 && !isBorder(indexes.get(j)).equals("upBorder")
+					&& colores.get(indexes.get(j)).equals(colores.get(indexes.get(j) - 1))) {
+				indexes.add(indexes.get(j) - 1);
+			}
+			if (indexes.get(j) < ((tamagnoCuadro * tamagnoCuadro) - tamagnoCuadro) && colores
+					.get(indexes.get(j)).equals(colores.get(indexes.get(j) + tamagnoCuadro))) {
+				indexes.add(indexes.get(j) + tamagnoCuadro);
+			}
+			if (indexes.get(j) > tamagnoCuadro && colores.get(indexes.get(j))
+					.equals(colores.get(indexes.get(j) - tamagnoCuadro))) {
+				indexes.add(indexes.get(j) - tamagnoCuadro);
+			}
+		}
+	}
+
+	private void eliminaDuplicados(ArrayList<Integer> array) {
+		ArrayList<Integer> sinDuplicado = (ArrayList<Integer>) array.stream().distinct()
+				.collect(Collectors.toList());
+		array.clear();
+		array.addAll(sinDuplicado);
+	}
+
+	private void checkeaMovimientos() { // Checkea si se quedó sin movimientos el jugador
+		if (movimientosRestantes > 0 || juegoGanado)
+			return;
+		timer.stop();
+		actualizaStats();
+		labelMovRest.setText("       Sin Movimientos!         ");
+		labelMovRest.setForeground(Color.RED);
+		String opciones[] = new String[] { "Reiniciar", "Volver al Menú", "Salir" };
+		int opcion = -1;
+		do {
+			opcion = (int) JOptionPane.showOptionDialog(null, "Sin Movimientos!", "Aviso",
+					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opciones,
+					null);
+		} while (opcion == -1);
+		switch (opcion) {
+			case 0:
+				Thread hilo = new Thread(new Runnable() {
+					public void run() {
+						reiniciarJuego();
+						try {
+							Thread.currentThread().join();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
+				hilo.start();
+				break;
+			case 1:
+				frame.cambiaLamina(Frame.PORTADA);
+				break;
+			case 2:
+				GestorArchivos.setLastConfig(config);
+				System.exit(0);
+				break;
+		}
+	}
+
+	private void juegoGanado() { // Checkea si ganó y añade botones si es así
+		if (indexes.size() != tamagnoCuadro * tamagnoCuadro || movimientosRestantes < 0) 
+			return;
+		juegoGanado = true;
+		timer.stop();
+		actualizaStats();
+		lmnBtn.removeAll();
+		JButton btnReiniciar = new JButton("Reiniciar");
+		btnReiniciar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				reiniciarJuego();
+			}
+		});
+		lmnBtn.add(btnReiniciar);
+		JButton btnVolver = new JButton("Volver al Menú");
+		btnVolver.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.PORTADA);
+			}
+		});
+		lmnBtn.add(btnVolver);
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				GestorArchivos.setLastConfig(config);
+				System.exit(0);
+			}
+		});
+		lmnBtn.add(btnSalir);
+	}
+
+	private void muestraGanado() { // Añade el texto ganado
+		if(!juegoGanado)
+			return;
+		juegoGanado = false;
+		JLabel ganaste = new JLabel("Ganaste!");
+		ganaste.setForeground(isColorDark(colorACambiar) ? Color.WHITE : Color.BLACK.brighter());
+		ganaste.setFont(new Font("Roboto", Font.BOLD, 48));
+		JLabel movs = new JLabel("Lo hiciste en " + (MOVIMIENTOS_INICIO - movimientosRestantes) + " movimientos");
+		movs.setForeground(isColorDark(colorACambiar) ? Color.WHITE : Color.BLACK.brighter());
+		movs.setFont(new Font("Roboto", 3, 15));
+		
+		Box cajaEnclose = Box.createHorizontalBox();
+		Box cajaFiller1 = Box.createHorizontalBox();
+		Box caja = Box.createVerticalBox();
+		Box cajaFiller2 = Box.createHorizontalBox();
+		
+		cajaFiller1.add(Box.createHorizontalGlue());
+		
+		caja.add(Box.createVerticalGlue());
+		caja.add(ganaste);
+		caja.add(movs);
+		caja.add(Box.createVerticalGlue());
+		caja.add(Box.createVerticalGlue());
+		
+		cajaFiller2.add(Box.createHorizontalGlue());
+		
+		cajaEnclose.add(cajaFiller1);
+		cajaEnclose.add(caja);
+		cajaEnclose.add(cajaFiller2);
+		
+		add(cajaEnclose, BorderLayout.CENTER);
+		updateUI();
+	}
+
+	private void hazUnMovimiento() {
+		for (int i = 0; i < indexes.size(); i++) { // Actualiza los colores del ArrayList
+			colores.set(indexes.get(i), colorACambiar);
+		}
+		for (int i = 0; i < 20; i++) {
+			checkColoresAlrededor(colores, indexes); // Checkea varias veces si hay nuevos colores
+														// para
+			eliminaDuplicados(indexes); // añadir al ArrayList
+		}
+		movimientosRestantes--;
+		labelMovRest.setText("Movimientos Restantes: " + Integer.toString(movimientosRestantes));
+		juegoGanado();
+		checkeaMovimientos();
+		repaint();
+		if(config.isSonidoOn() && !gameStarting)
+			playSound(new File("src/pop.wav").getAbsoluteFile());
+	}
+
+	private void actualizaStats() {
+		if(config.isBetaTester() || MOVIMIENTOS_INICIO == movimientosRestantes)
+			return;
+		int movCompleto = MOVIMIENTOS_INICIO - movimientosRestantes;
+		int best;
+		if(juegoGanado && (stats.getBest(config.getTamagnoCuadro()) > movCompleto || 
+				stats.getBest(config.getTamagnoCuadro()) == 0))
+			best = movCompleto;
+		else 
+			best = 0;
+		int tiempo = config.isTimerOn() && juegoGanado && (stats.getBestTime(config.getTamagnoCuadro()) == 0
+				|| stats.getBestTime(config.getTamagnoCuadro()) > timer.getTimeInput() -timer.getTimeLeft())  
+				? timer.getTimeInput() - timer.getTimeLeft() : 0; 
+		stats.actualizaTabla(config.getTamagnoCuadro(), juegoGanado, best, tiempo);
+		config.setTablaStats(stats);
+		GestorArchivos.setEstadisticas(stats, config);
+	}
+
 	private void sinTiempo() {
 		if(quedaTiempo || !config.isTimerOn())
 			return;		
@@ -440,7 +451,7 @@ public class LaminaJuego extends JPanel {
 			break;
 		}
 	}
-	
+
 	private int getEsquinaIndex() {
 		if (esquinaCuadro == 0)
 			return tamagnoCuadro - 1;
@@ -452,27 +463,18 @@ public class LaminaJuego extends JPanel {
 			return tamagnoCuadro * tamagnoCuadro - 1;
 		return -1;
 	}
-	
-	private int calculaMovimientos(int tam) {
-		return (int)(Math.round(1.4 * tam + 5.53));
+
+	private String isBorder(int x) { // Detecta si un valor del array pertence al borde del cuadro
+		if (x == 0 || x % tamagnoCuadro == 0)
+			return "upBorder";
+		if (((x + 1) % tamagnoCuadro) == 0)
+			return "downBorder";
+		return "";
 	}
-	
-	private void actualizaStats() {
-		if(config.isBetaTester() || MOVIMIENTOS_INICIO == movimientosRestantes)
-			return;
-		int movCompleto = MOVIMIENTOS_INICIO - movimientosRestantes;
-		int best;
-		if(juegoGanado && (stats.getBest(config.getTamagnoCuadro()) > movCompleto || 
-				stats.getBest(config.getTamagnoCuadro()) == 0))
-			best = movCompleto;
-		else 
-			best = 0;
-		int tiempo = config.isTimerOn() && juegoGanado && (stats.getBestTime(config.getTamagnoCuadro()) == 0
-				|| stats.getBestTime(config.getTamagnoCuadro()) > timer.getTimeInput() -timer.getTimeLeft())  
-				? timer.getTimeInput() - timer.getTimeLeft() : 0; 
-		stats.actualizaTabla(config.getTamagnoCuadro(), juegoGanado, best, tiempo);
-		config.setTablaStats(stats);
-		GestorArchivos.setEstadisticas(stats, config);
+
+	private void pintaFondo(Graphics2D g2) {
+		g2.setColor(Color.GRAY.brighter());
+		g2.fill(cuadro.getCuadroBackground());
 	}
 	
 	private boolean isColorDark(Color color) {  
@@ -481,12 +483,11 @@ public class LaminaJuego extends JPanel {
 			return false; 
 		return true;
 	}
-	
-	private void pintaFondo(Graphics2D g2) {
-		g2.setColor(Color.GRAY.brighter());
-		g2.fill(cuadro.getCuadroBackground());
+
+	private int calculaMovimientos(int tam) {
+		return (int)(Math.round(1.4 * tam + 5.53));
 	}
-	
+
 	private synchronized void playSound(File absFile) {
 		  new Thread(new Runnable() {
 		    public void run() {

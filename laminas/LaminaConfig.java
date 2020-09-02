@@ -110,7 +110,6 @@ public class LaminaConfig extends JPanel {
 			JRadioButton btn = new JRadioButton(
 					new ImageIcon(pathRoot + Integer.toString(i) + pathFormat));
 			btn.setBackground(Color.CYAN.darker());
-		//	btn.setBounds(x, y, tamx, tamy);
 			grupoEsquina.add(btn);
 			btn.setName(Integer.toString(i));
 			btn.addActionListener(new ActionListener() {
@@ -150,7 +149,6 @@ public class LaminaConfig extends JPanel {
 				String pathFull = pathRoot + "paleta" + Integer.toString(counter) + pathFormat;
 				btnPaleta = new JButton();
 				btnPaleta.setActionCommand(Integer.toString(counter));
-			//	btnPaleta.setBounds(x, y, tamx, tamy);
 				btnPaleta.setBorder(BorderFactory.createLineBorder(Color.CYAN.darker(), 2));
 				btnPaleta.setIcon(new ImageIcon(pathFull));
 				btnPaleta.addActionListener(new ActionListener() {
@@ -184,32 +182,27 @@ public class LaminaConfig extends JPanel {
 	private void creaLabels() {
 		//----------------------------LABEL FORMA:----------------------------------------
 		labelShape = new JLabel("Forma:");
-	//	labelShape.setBounds(165, 5, 80, 25);
 		labelShape.setFont(new Font("Roboto", Font.PLAIN, 14));
 		//-----------------------LABEL TAMAÑO-----------------------------------------
 		JLabel labelTamagno = new JLabel("Tamaño del Cuadro");
 		labelTamagno.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		labelTamagno.setFont(new Font("Roboto", Font.PLAIN, 20));
-	//	labelTamagno.setBounds(60, 100, 200, 20);
 		cajas[3].add(labelTamagno);
 		//-----------------------LABEL COLORES PREDEF-----------------------------------------
 		JLabel labelColor = new JLabel("Colores Predefinidos");
 		labelColor.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		labelColor.setFont(new Font("Roboto", Font.PLAIN, 20));
-	//	labelColor.setBounds(55, 150, 200, 20);
 		cajas[5].add(labelColor);
 		//-----------------------LABEL ESQUINA INICIO-----------------------------------------
 		labelEsquina = new JLabel("Esquina de Inicio");
 		labelEsquina.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		labelEsquina.setFont(new Font("Roboto", Font.PLAIN, 20));
-	//	labelEsquina.setBounds(75, 295, 200, 25);
 		
 	}
 	
 	private void creaCompGenerales() {
 		//---------------------------BOTON VOLVER-----------------------------------------
 		JButton btnVolver = new JButton("Volver");
-	//	btnVolver.setBounds(8, 5, 80, 25);
 		btnVolver.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -220,7 +213,6 @@ public class LaminaConfig extends JPanel {
 		cajas[0].add(btnVolver);
 		//-----------------------BOTON CAMBIA ARCHIVO HS-----------------------------------------
 		btnCambiaArchivo = new JButton("Cambiar Archivo HS");
-	//	btnCambiaArchivo.setBounds(153, 65, 140, 25);
 		btnCambiaArchivo.setEnabled(false);
 		btnCambiaArchivo.addActionListener(new ActionListener() {
 
@@ -252,7 +244,6 @@ public class LaminaConfig extends JPanel {
 		cajas[2].add(btnCambiaArchivo);
 		//-----------------------BOTON VER PROMEDIO-----------------------------------------
 		btnVerPromedios = new JButton("Ver Mov. Promedio");
-	//	btnVerPromedios.setBounds(8, 65, 140, 25);
 		btnVerPromedios.setEnabled(false);
 		btnVerPromedios.addActionListener(new ActionListener() {
 
@@ -265,7 +256,6 @@ public class LaminaConfig extends JPanel {
 		cajas[2].add(Box.createHorizontalGlue());
 		//-------------------------BOTON VER ARCHIVO HS-----------------------------------------
 		btnVerArchivo = new JButton("Ver Archivo HS");
-		//	btnVerArchivo.setBounds(153, 35, 140, 25);
 		btnVerArchivo.setEnabled(false);
 		btnVerArchivo.addActionListener(new ActionListener() {
 			
@@ -278,7 +268,6 @@ public class LaminaConfig extends JPanel {
 		cajas[1].add(btnVerArchivo);
 		//-------------------------BOTON RESET TODO.-----------------------------------------
 		btnResetTodo = new JButton("Resetear Todo");
-		//	btnResetTodo.setBounds(8, 35, 140, 25);
 		btnResetTodo.setEnabled(false);
 		btnResetTodo.setPreferredSize(btnCambiaArchivo.getPreferredSize());
 		btnResetTodo.addActionListener(new ActionListener() {
@@ -336,11 +325,9 @@ public class LaminaConfig extends JPanel {
 				config.setSonido(boxSonido.isSelected());
 			}
 		});
-	//	boxSonido.setBounds(7, 295, 32, 32);
 		boxSonido.setBackground(Color.CYAN.darker());
 		//---------------------------BOTON RESET PREDETERMINADOS---------------------------
 		btnPredeterminado = new JButton("Reset");
-	//	btnPredeterminado.setBounds(93, 5, 55, 25);
 		btnPredeterminado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				config.setDefaultConfigs();
@@ -366,7 +353,6 @@ public class LaminaConfig extends JPanel {
 			}
 		};
 		spinnerShape = new JSpinner(modeloShape);
-	//	spinnerShape.setBounds(213, 5, 80, 25);
 		spinnerShape.setMaximumSize(new Dimension(frame.getWidth() / 6, 25));
 		spinnerShape.addChangeListener(new ChangeListener() {
 			

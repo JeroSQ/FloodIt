@@ -40,6 +40,8 @@ public class LaminaJuego extends JPanel {
 	private JTimer timer;
 	private JPanel lmnBtn = new JPanel();
 	private Box cajaNorth = Box.createHorizontalBox();
+	private InputMap mapaInput = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+	private ActionMap mapaA = getActionMap();
 
 	public LaminaJuego(Frame frame, Configuraciones config) {
 		setLayout(new BorderLayout());
@@ -127,16 +129,17 @@ public class LaminaJuego extends JPanel {
 		//pantalla = new Dimension(1366, 768);
 		ImageIcon icono = pantalla.height > 1000 ? new ImageIcon("src/img/restart.png") 
 				: new ImageIcon("src/img/restartchico.png");
-		btnRestart.setIcon(icono);
 		btnRestart.setBackground(null);
 		btnRestart.setBorder(null);
-		btnRestart.setMnemonic(KeyEvent.VK_R);
-		btnRestart.addActionListener(new ActionListener() {
+		btnRestart.setAction(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 					actualizaStats();
 					reiniciarJuego();
 			}
 		});
+		mapaInput.put(KeyStroke.getKeyStroke("R"), "restart");
+		mapaA.put("restart", btnRestart.getAction());
+		btnRestart.setIcon(icono);
 		
 		cajaNorth.add(Box.createHorizontalGlue());
 		cajaNorth.add(btnVolver);
@@ -148,28 +151,7 @@ public class LaminaJuego extends JPanel {
 		
 		Box cajaNorthSur = Box.createHorizontalBox();
 		
-		int time = 0;
-		
-		switch(tamagnoCuadro) {
-		case 10:
-			time = 30000;
-			break;
-		case 12: 
-			time = 120000;
-			break;
-		case 15:
-			time = 150000;
-			break;
-		case 20: 
-			time = 200000;
-			break;
-		case 25:
-			time = 250000;
-			break;
-		default:
-			time = 500000;
-			break;
-		}
+		int time = tamagnoCuadro * 1000;
 		
 		timer = new JTimer(2,time,true, SwingConstants.CENTER);
 		cajaNorthSur.add(Box.createHorizontalGlue());
@@ -208,10 +190,10 @@ public class LaminaJuego extends JPanel {
 			JButton boton = new JButton();
 			boton.setBackground(paletaColores[i]);
 			boton.setPreferredSize(new Dimension(TAM_BOTON, TAM_BOTON));
-			boton.setMnemonic(49 + i);
-			boton.addActionListener(new ActionListener() {
-	
+			boton.setAction(new AbstractAction() {
+				
 				public void actionPerformed(ActionEvent e) {
+					boton.getModel().setPressed(true);
 					if (colorACambiar.equals(boton.getBackground()) || movimientosRestantes <= 0)
 						return;
 					colorACambiar = boton.getBackground();
@@ -220,6 +202,8 @@ public class LaminaJuego extends JPanel {
 						timer.start();
 				}
 			});
+			mapaInput.put(KeyStroke.getKeyStroke(Integer.toString(i + 1)), "accionBtn" + i);
+			mapaA.put("accionBtn" + i, boton.getAction());
 			lmnBtn.add(boton);
 		}
 		//----------------------------------------------------------------------------------------------

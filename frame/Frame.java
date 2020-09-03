@@ -93,6 +93,10 @@ public class Frame extends JFrame {
 		laminaColores.actualizaColores();
 	}
 	
+	public void llamaResetComboJugador() {
+		laminaPortada.resetComboJugador();
+	}
+	
 	private void creaLaminas() {
 		cargaLaminas = new JScrollPane();
 		laminaConfig = new LaminaConfig(this, config);

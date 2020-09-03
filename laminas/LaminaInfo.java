@@ -41,8 +41,8 @@ public class LaminaInfo extends JPanel {
 		cajas[0].add(Box.createHorizontalStrut(frame.getWidth() / 15));
 		cajas[0].add(btnVolver);
 		cajas[0].add(Box.createHorizontalGlue());
-		// ---------------------------LABEL TÕTUTLO---------------------------------------
-		JLabel titulo = new JLabel("CÛmo Jugar");
+		// ---------------------------LABEL T√çTUTLO---------------------------------------
+		JLabel titulo = new JLabel("C√≥mo Jugar");
 		titulo.setFont(new Font("Roboto", Font.BOLD, frame.getWidth() / 10 / 2));
 		cajas[1].add(Box.createHorizontalGlue());
 		cajas[1].add(titulo);
@@ -72,10 +72,10 @@ public class LaminaInfo extends JPanel {
 		descripcion.setText("Empiezas desde la esquina de inicio seleccionada."
 				+ " Para progresar debes pulsar los botones de colores debajo del tablero. "
 				+ "Cuando cambias el color, "
-				+ "todos los cuadrados adyacentes tambiÈn cambian de color."
+				+ "todos los cuadrados adyacentes tambi√©n cambian de color."
 				+ "\n"
 				+ "Puedes cambiar la forma, colores, esquina de inicio"
-				+ " y muchos par·metros m·s en Configuraciones. "
+				+ " y muchos par√°metros m√°s en Configuraciones. "
 				+ "\n"
 				+ "Para enceder el Modo Timer, presiona el reloj en Configuraciones.");
 		cajas[3].add(descripcion);

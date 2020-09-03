@@ -29,6 +29,10 @@ public class LaminaPortada extends JPanel {
 	public void pasameLaminas(LaminaJuego laminaJuego) { 
 		this.laminaJuego = laminaJuego;
 	}
+	
+	public void resetComboJugador() {
+		tipoJugador.setSelectedIndex(0);
+	}
 
 	private void inicializaComponentesPortada() { 
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -41,13 +45,14 @@ public class LaminaPortada extends JPanel {
 		tipoJugador = new JComboBox<String>();
 		tipoJugador.setBounds(5, 15, 90, 20);
 		tipoJugador.addItem("Player");
-		tipoJugador.addItem("BetaTester");
+		tipoJugador.addItem("Admin");
+		tipoJugador.setPrototypeDisplayValue("TipoJugador");
 		tipoJugador.setMaximumSize(new Dimension(tipoJugador.getWidth(), 25));
 		tipoJugador.setToolTipText("Cambiar Jugador");
 		tipoJugador.addItemListener(new ItemListener() {
 			
 			public void itemStateChanged(ItemEvent e) {
-				if(tipoJugador.getSelectedItem().equals("BetaTester"))
+				if(tipoJugador.getSelectedItem().equals("Admin"))
 					config.setBetaTester(true);
 				else
 					config.setBetaTester(false);

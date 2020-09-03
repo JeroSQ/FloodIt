@@ -165,11 +165,11 @@ public class GestorArchivos {
 		return false;
 	}
 	
-	public static void borraTodo() {
+	public static void borraTodo(Configuraciones config) {
 		borraPaleta(new int[] {0,1,2,3,4});
 		File lastConfig = new File("src/lastConfig.csv");
 		lastConfig.delete();
-		File stats = new File("src/stats.txt");
+		File stats = config.getArchivoStats();
 		stats.delete();
 	}
 

@@ -15,7 +15,7 @@ import juego.*;
 public class LaminaConfig extends JPanel {
 
 	private Frame frame;
-	private JButton btnCambiaArchivo, btnVerPromedios, btnVerArchivo, btnResetTodo, btnPredeterminado,
+	private JButton btnCambiaArchivo, btnVerTuto, btnVerArchivo, btnResetTodo, btnPredeterminado,
 		btnPaleta, btnCustom;
 	private JCheckBox boxSonido, btnTimer;
 	private JLabel labelShape, labelEsquina;
@@ -47,7 +47,6 @@ public class LaminaConfig extends JPanel {
 		boolean betaTester = config.isBetaTester();
 		btnVerArchivo.setEnabled(betaTester);
 		btnCambiaArchivo.setEnabled(betaTester);
-		btnVerPromedios.setEnabled(betaTester);
 		btnResetTodo.setEnabled(betaTester);
 		Enumeration<AbstractButton> elementos = grupoPaleta.getElements();
 		while (elementos.hasMoreElements()) {
@@ -76,10 +75,6 @@ public class LaminaConfig extends JPanel {
 	}
 
 	private void creaBotonesSize() {
-		int x = 5;
-		int y = 125;
-		int tamx = 60;
-		int tamy = 20;
 		int tamagnos[] = new int[] { 10, 12, 15, 20, 25 };
 		ButtonGroup grupoTam = new ButtonGroup();
 		for (int i = 0; i < tamagnos.length; i++) {
@@ -95,17 +90,12 @@ public class LaminaConfig extends JPanel {
 			});
 			cajas[4].add(Box.createHorizontalGlue());
 			cajas[4].add(btn);
-			x += 60;
 		}
 		cajas[4].add(Box.createHorizontalGlue());
 	}
 
 	private void creaBotonesEsq() {
 		ButtonGroup grupoEsquina = new ButtonGroup();
-		int x = 50;
-		int y = 325;
-		int tamx = 50;
-		int tamy = 24;
 		for (int i = 0; i < 4; i++) {
 			JRadioButton btn = new JRadioButton(
 					new ImageIcon(pathRoot + Integer.toString(i) + pathFormat));
@@ -136,7 +126,6 @@ public class LaminaConfig extends JPanel {
 			}
 			cajas[10].add(Box.createHorizontalGlue());
 			cajas[10].add(btn);
-			x += 55;
 		}
 		cajas[10].add(Box.createHorizontalGlue());
 	}
@@ -242,17 +231,16 @@ public class LaminaConfig extends JPanel {
 				btnCambiaArchivo.getPreferredSize().height));
 		cajas[2].add(Box.createHorizontalGlue());
 		cajas[2].add(btnCambiaArchivo);
-		//-----------------------BOTON VER PROMEDIO-----------------------------------------
-		btnVerPromedios = new JButton("Ver Mov. Promedio");
-		btnVerPromedios.setEnabled(false);
-		btnVerPromedios.addActionListener(new ActionListener() {
+		//-----------------------BOTON VER TUTORIAL-----------------------------------------
+		btnVerTuto = new JButton("Ver Tutorial");
+		btnVerTuto.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnVerPromedios.setPreferredSize(new Dimension(btnCambiaArchivo.getPreferredSize()));
+		btnVerTuto.setPreferredSize(new Dimension(btnCambiaArchivo.getPreferredSize()));
 		cajas[2].add(Box.createHorizontalGlue());
-		cajas[2].add(btnVerPromedios);
+		cajas[2].add(btnVerTuto);
 		cajas[2].add(Box.createHorizontalGlue());
 		//-------------------------BOTON VER ARCHIVO HS-----------------------------------------
 		btnVerArchivo = new JButton("Ver Archivo HS");
@@ -279,8 +267,10 @@ public class LaminaConfig extends JPanel {
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
 				if (opcion != 0)
 					return;
-				GestorArchivos.borraTodo();
+				config.getTablaStats().reseteaTabla();
+				GestorArchivos.borraTodo(config);
 				btnPredeterminado.doClick();
+				frame.llamaResetComboJugador();
 				frame.llamaActualizaColores();
 			}
 		});
@@ -354,6 +344,7 @@ public class LaminaConfig extends JPanel {
 		};
 		spinnerShape = new JSpinner(modeloShape);
 		spinnerShape.setMaximumSize(new Dimension(frame.getWidth() / 6, 25));
+		spinnerShape.getEditor().setPreferredSize(new Dimension(70, 25));
 		spinnerShape.addChangeListener(new ChangeListener() {
 			
 			public void stateChanged(ChangeEvent e) {

@@ -14,7 +14,7 @@ public class Main {
 		try {
 			Properties props = new Properties();
 			props.put("logoString", "Flood It");
-		//	props.put("tooltipBackgroundColor", "255 0 0");
+			props.put("macStyleScrollBar", "on");
 			GraphiteLookAndFeel.setCurrentTheme(props);
 			UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
 		} catch (Exception e) {

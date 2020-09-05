@@ -236,6 +236,7 @@ public class LaminaConfig extends JPanel {
 		btnVerTuto.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.TUTO);
 			}
 		});
 		btnVerTuto.setPreferredSize(new Dimension(btnCambiaArchivo.getPreferredSize()));

@@ -14,6 +14,7 @@ public class Frame extends JFrame {
 	private LaminaColores laminaColores;
 	private LaminaInfo laminaInfo;
 	private LaminaStats laminaStats;
+	private LaminaTutorial laminaTutorial;
 	private JScrollPane cargaLaminas;
 	private Configuraciones config;
 	public static final int PORTADA = 0;
@@ -22,6 +23,7 @@ public class Frame extends JFrame {
 	public static final int COLORES = 3;
 	public static final int INFO = 4;
 	public static final int STATS = 5;
+	public static final int TUTO = 6;
 
 	public Frame() { 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -48,6 +50,7 @@ public class Frame extends JFrame {
 			}
 		});
 		pack();
+		cargaLaminas.setViewportView(laminaTutorial);
 	}
 
 	public void cambiaLamina(int lamina) {
@@ -78,6 +81,9 @@ public class Frame extends JFrame {
 				laminaStats.actualizaStats();
 				setTitle("Flood It | Estadísticas");
 				break;
+			case TUTO:
+				cargaLaminas.setViewportView(laminaTutorial);
+				setTitle("Flood It | Tutorial");
 		}
 	}
 	
@@ -105,6 +111,7 @@ public class Frame extends JFrame {
 		laminaColores = new LaminaColores(this, config);
 		laminaStats = new LaminaStats(this, config);
 		laminaInfo = new LaminaInfo(this);
+		laminaTutorial = new LaminaTutorial(this);
 	}
 
 	private void addLaminas() {
@@ -114,6 +121,7 @@ public class Frame extends JFrame {
 		cargaLaminas.add(laminaConfig);
 		cargaLaminas.add(laminaInfo);
 		cargaLaminas.add(laminaStats);
+		cargaLaminas.add(laminaTutorial);
 		add(cargaLaminas);
 	}
 }

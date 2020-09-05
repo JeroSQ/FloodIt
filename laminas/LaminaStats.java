@@ -118,6 +118,35 @@ public class LaminaStats extends JPanel {
 		cajas[2].add(btnResetHS);
 		cajas[2].add(Box.createHorizontalGlue());
 		//--------------------------------------------------------------------------------------
+		JPopupMenu menu = new JPopupMenu();
+		JMenuItem color = new JMenuItem("Colores P.");
+		color.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.COLORES);
+			}
+			
+		});
+		JMenuItem config = new JMenuItem("Config");
+		config.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.CONFIG);
+			}
+			
+		});
+		JMenuItem stats = new JMenuItem("Estadísticas");
+		stats.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.STATS);
+			}
+			
+		});
+		menu.add(config);
+		menu.add(color);
+		menu.add(stats);
+		setComponentPopupMenu(menu);
 	}
 	
 	public void actualizaStats() {

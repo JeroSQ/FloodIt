@@ -356,11 +356,11 @@ public class LaminaConfig extends JPanel {
 		tf.setEditable(false);
 		//---------------------------------POP UP MENU-------------------------------------
 		JPopupMenu menu = new JPopupMenu();
-		JMenuItem info = new JMenuItem("Info");
-		info.addActionListener(new ActionListener() {
+		JMenuItem color = new JMenuItem("Colores P.");
+		color.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				frame.cambiaLamina(Frame.INFO);
+				frame.cambiaLamina(Frame.COLORES);
 			}
 			
 		});
@@ -380,8 +380,8 @@ public class LaminaConfig extends JPanel {
 			}
 			
 		});
-		menu.add(info);
 		menu.add(config);
+		menu.add(color);
 		menu.add(stats);
 		setComponentPopupMenu(menu);
 	}

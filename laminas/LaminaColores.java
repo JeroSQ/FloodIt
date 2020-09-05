@@ -103,8 +103,8 @@ public class LaminaColores extends JPanel {
 		cajaVolv.add(Box.createHorizontalStrut(frame.getWidth() / 10));
 		cajaVolv.add(btnVolver, BorderLayout.NORTH);
 		cajaVolv.add(Box.createHorizontalGlue());
-		JLabel labelColor = new JLabel("Colores Custom");
-		labelColor.setFont(new Font("Roboto", Font.PLAIN, 24));
+		JLabel labelColor = new JLabel("Colores Personalizados");
+		labelColor.setFont(new Font("Roboto", Font.PLAIN, frame.getWidth() / 15));
 		cajaVolv.add(labelColor);
 		cajaVolv.add(Box.createHorizontalGlue());
 		add(cajaVolv, BorderLayout.NORTH);
@@ -257,6 +257,35 @@ public class LaminaColores extends JPanel {
 		}
 		//----------------------------------------------------------------------------------------------
 		actualizaBotones(false);
+		JPopupMenu menu = new JPopupMenu();
+		JMenuItem color = new JMenuItem("Colores P.");
+		color.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.COLORES);
+			}
+			
+		});
+		JMenuItem config = new JMenuItem("Config");
+		config.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.CONFIG);
+			}
+			
+		});
+		JMenuItem stats = new JMenuItem("Estadísticas");
+		stats.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.STATS);
+			}
+			
+		});
+		menu.add(config);
+		menu.add(color);
+		menu.add(stats);
+		setComponentPopupMenu(menu);
 	}
 	
 	private void actualizaBotones(boolean isListCaller) {

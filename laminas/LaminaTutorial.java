@@ -16,6 +16,7 @@ public class LaminaTutorial extends JPanel {
 	private Frame frame;
 	private JPanel panel;
 	public JScrollPane scroll;
+	private JLabel labelJugar, labelConfig, labelColores;
 	
 	public LaminaTutorial(Frame frame) {
 		setBackground(Color.CYAN.darker());
@@ -84,7 +85,7 @@ public class LaminaTutorial extends JPanel {
 	    btnJugar.setForeground(Color.BLUE.brighter());
 	    btnJugar.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		System.out.println(scroll.getVerticalScrollBar().getValue());
+	    		frame.cargaLaminas.getVerticalScrollBar().setValue(200);
 	    	}
 	    });
 	    
@@ -98,7 +99,21 @@ public class LaminaTutorial extends JPanel {
 	    btnConfig.setForeground(Color.BLUE.brighter());
 	    btnConfig.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		
+	    		frame.cargaLaminas.getVerticalScrollBar().setValue(200);
+	    	}
+	    });
+	    
+	    JButton btnColor = new JButton();
+	    btnColor.setText("<HTML><u>Colores Personalizados<FONT color=\"#000099\"></FONT>"
+	    		+ "<u></HTML>");
+	    btnColor.setHorizontalAlignment(SwingConstants.LEFT);
+	    btnColor.setBorderPainted(false);
+	    btnColor.setOpaque(false);
+	    btnColor.setContentAreaFilled(false);
+	    btnColor.setForeground(Color.BLUE.brighter());
+	    btnColor.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		frame.cargaLaminas.getVerticalScrollBar().setValue(200);
 	    	}
 	    });
 	    
@@ -112,21 +127,21 @@ public class LaminaTutorial extends JPanel {
 	    btnStats.setForeground(Color.BLUE.brighter());
 	    btnStats.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		
+	    		frame.cargaLaminas.getVerticalScrollBar().setValue(200);
 	    	}
 	    });
 	    
-	    JButton btnColor = new JButton();
-	    btnColor.setText("<HTML><u>Colores Personalizados<FONT color=\"#000099\"></FONT>"
+	    JButton btnTimer = new JButton();
+	    btnTimer.setText("<HTML><u>Modo Temporizador<FONT color=\"#000099\"></FONT>"
 	        + "<u></HTML>");
-	    btnColor.setHorizontalAlignment(SwingConstants.LEFT);
-	    btnColor.setBorderPainted(false);
-	    btnColor.setOpaque(false);
-	    btnColor.setContentAreaFilled(false);
-	    btnColor.setForeground(Color.BLUE.brighter());
-	    btnColor.addActionListener(new ActionListener() {
+	    btnTimer.setHorizontalAlignment(SwingConstants.LEFT);
+	    btnTimer.setBorderPainted(false);
+	    btnTimer.setOpaque(false);
+	    btnTimer.setContentAreaFilled(false);
+	    btnTimer.setForeground(Color.BLUE.brighter());
+	    btnTimer.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		
+	    		frame.cargaLaminas.getVerticalScrollBar().setValue(200);
 	    	}
 	    });
 	    
@@ -135,15 +150,16 @@ public class LaminaTutorial extends JPanel {
 	    caja1.add(labelIndice);
 	    caja1.add(btnJugar);
 	    caja1.add(btnConfig);
-	    caja1.add(btnStats);
 	    caja1.add(btnColor);
+	    caja1.add(btnTimer);
+	    caja1.add(btnStats);
 	    
 	  //-------------------------------------------------CAJA 2-------------------------------------------------------
 	    
 	    SimpleAttributeSet sa = new SimpleAttributeSet();
 		StyleConstants.setAlignment(sa, StyleConstants.ALIGN_JUSTIFIED);
 		
-		JLabel labelJugar = new JLabel("Cómo Jugar");
+		labelJugar = new JLabel("Cómo Jugar");
 		labelJugar.setAlignmentX(CENTER_ALIGNMENT);
 		labelJugar.setFont(new Font("Serif", Font.BOLD, frame.getWidth() / 12));
 		
@@ -187,6 +203,69 @@ public class LaminaTutorial extends JPanel {
 		caja3.add(Box.createHorizontalGlue());
 		caja3.add(labelFotoRestart);
 		caja3.add(Box.createHorizontalGlue());
+	  //-------------------------------------------------CAJA 4--------------------------------------------------------
+		labelConfig = new JLabel("Configuraciones");
+		labelConfig.setAlignmentX(CENTER_ALIGNMENT);
+		labelConfig.setFont(new Font("Serif", Font.BOLD, frame.getWidth() / 12));
+		
+	    JTextPane descConfig = new JTextPane();
+	    descConfig.setFont(new Font("Roboto", Font.PLAIN,  frame.getHeight() / 30));
+	    descConfig.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+	    descConfig.setForeground(new Color(48,48,48));
+	    descConfig.setOpaque(false);
+		descConfig.setEditable(false);
+		descConfig.setBackground(null);
+		descConfig.getStyledDocument().setParagraphAttributes(0, frame.getContentPane().getWidth() - 8, sa, false);
+		descConfig.setText("En Configuraciones podrás cambiar muchos parámetros para cambiar la dificultad y la apariencia. "
+				+ "Para acceder a Configuraciones puedes pulsar el bóton en el inicio o hacer click derecho y pulsar Config."
+				+ "\n\n\n\n\n\n"
+				+ "Allí podrás cambiar: \n\n"
+				+ "• La forma de las figuras \n"
+				+ "• El tamaño del cuadro \n"
+				+ "• La paleta de colores \n"
+				+ "• La esquina de inicio \n"
+				+ "• El sonido \n"
+				+ "• El Modo Temporizador \n"
+				+ "• Otras configuraciones avanzadas \n");
+		descConfig.setPreferredSize(new Dimension(frame.getContentPane().getWidth(), (int) (descConfig.getPreferredSize().height * 1.3)));
+		
+		
+		Box caja4 = Box.createVerticalBox();
+		caja4.add(labelConfig);
+		caja4.add(descConfig);
+		 //-------------------------------------------------CAJA 5--------------------------------------------------------
+		labelColores = new JLabel("Colores Personzalizados");
+		labelColores.setAlignmentX(CENTER_ALIGNMENT);
+		labelColores.setFont(new Font("Serif", Font.BOLD, frame.getWidth() / 12));
+		
+	    JTextPane descColores = new JTextPane();
+	    descColores.setFont(new Font("Roboto", Font.PLAIN,  frame.getHeight() / 30));
+	    descColores.setBackground(null);
+	    descColores.setOpaque(false);
+	    descColores.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+	    descColores.setForeground(new Color(48,48,48));
+	    descColores.setEditable(false);
+	    descColores.getStyledDocument().setParagraphAttributes(0, frame.getContentPane().getWidth() - 8, sa, false);
+	    descColores.setText("En Colores Personalizados pordrás crear tus propias paletas de colores para jugar. "
+	    		+ "Para ir a Colores Personalizados puedes pulsar en Elegir Colores Personalizados en Configuraciones o "
+	    		+ "puedes hacer click derecho y pulsar Colores P. "
+	    		+ "\n\n\n\n\n\n"
+	    		+ "Para crear una nueva paleta, simplemente pulsa en Crear nueva paleta y se desplegará una ventana donde "
+	    		+ "puedes elegir el primer color. Luego, presiona aceptar y se abrirá otra ventana para elegir el segundo color. "
+	    		+ "Repite este proceso hasta elegir los 6 colores de tu paleta. Luego, podrás elegir darle un nombre a la paleta "
+	    		+ "recién creada o dejar que quede con un nombre por defecto. Ten en cuenta que sólo puedes tener creadas 5 paletas "
+	    		+ "y que dentro de cada paleta no pueden haber colores repetidos ni vacíos. Recuerda seleccionar la paleta para "
+	    		+ "poder jugar con ella.");
+	    descColores.setPreferredSize(new Dimension(frame.getContentPane().getWidth(), (int) (descColores.getPreferredSize().height * 2.3)));
+		
+	    Box cajaLaminaColor = Box.createHorizontalBox();
+	    cajaLaminaColor.add(new JLabel(new ImageIcon("src/img/laminaColores.png")));
+		
+		Box caja5 = Box.createVerticalBox();
+		caja5.add(labelColores);
+		caja5.add(descColores);
+		caja5.add(cajaLaminaColor);
+		
 	  //-------------------------------------------------AÑADIR CAJAS Y CAJA SOUTH-------------------------------------
 	    GridBagConstraints c = new GridBagConstraints();
 	    c.gridx = 1;
@@ -222,9 +301,32 @@ public class LaminaTutorial extends JPanel {
 	    
 	    c.gridy = 3;
 	    panel.add(caja3, c);
+	    
+	    c.gridy = 4;
+	    panel.add(caja4, c);
+	    c.gridx = 0;
+	    Box cajaPopupConfig = Box.createVerticalBox();
+	    cajaPopupConfig.add(Box.createVerticalStrut(frame.getWidth() / 8));
+	    cajaPopupConfig.add(Box.createHorizontalStrut(frame.getWidth() / 3));
+	    cajaPopupConfig.add(new JLabel(new ImageIcon("src/img/popupConfig.png")));
+	    cajaPopupConfig.add(Box.createVerticalGlue());
+	    cajaPopupConfig.add(Box.createVerticalGlue());
+	    panel.add(cajaPopupConfig, c);
+	    
+	    c.gridx = 0;
+	    c.gridy = 5;
+	    panel.add(caja5, c);
+	    
+	    Box cajaPopupColor = Box.createVerticalBox();
+	    cajaPopupColor.add(Box.createHorizontalStrut(frame.getWidth() / 3));
+	    cajaPopupColor.add(Box.createVerticalStrut(frame.getWidth() / 2));
+	    cajaPopupColor.add(new JLabel(new ImageIcon("src/img/popupColor.png")));
+	    cajaPopupColor.add(Box.createVerticalStrut((int) (descColores.getPreferredSize().height * 1.7)));
+	    panel.add(cajaPopupColor, c);
 		
 	    scroll.setViewportView(panel);
 	    scroll.setBorder(BorderFactory.createLineBorder(Color.CYAN.darker(), 1));
+	    scroll.setVerticalScrollBar(new JScrollBar(JScrollBar.VERTICAL, 100,50,0,400));
 	    add(scroll, BorderLayout.CENTER);
 	    
 		JButton btnVolver2 = new JButton("Volver");
@@ -234,5 +336,45 @@ public class LaminaTutorial extends JPanel {
 			}
 		});
 		add(btnVolver2, BorderLayout.SOUTH);
+		//-------------------------------------------------POP UP MENU----------------------------------------------------
+		JPopupMenu menu = new JPopupMenu();
+		JMenuItem color = new JMenuItem("Colores P.");
+		color.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.COLORES);
+			}
+			
+		});
+		JMenuItem config = new JMenuItem("Config");
+		config.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.CONFIG);
+			}
+			
+		});
+		JMenuItem stats = new JMenuItem("Estadísticas");
+		stats.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				frame.cambiaLamina(Frame.STATS);
+			}
+			
+		});
+		menu.add(config);
+		menu.add(color);
+		menu.add(stats);
+		panel.setComponentPopupMenu(menu);
+		descripcion.setComponentPopupMenu(menu);
+		descConfig.setComponentPopupMenu(menu);
+		descColores.setComponentPopupMenu(menu);
+		cajaNorth.setComponentPopupMenu(menu);
+		caja0.setComponentPopupMenu(menu);
+		caja1.setComponentPopupMenu(menu);
+		caja2.setComponentPopupMenu(menu);
+		caja3.setComponentPopupMenu(menu);
+		caja4.setComponentPopupMenu(menu);
+		caja5.setComponentPopupMenu(menu);
 	}
 }

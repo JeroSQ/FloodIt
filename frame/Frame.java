@@ -15,7 +15,7 @@ public class Frame extends JFrame {
 	private LaminaInfo laminaInfo;
 	private LaminaStats laminaStats;
 	private LaminaTutorial laminaTutorial;
-	private JScrollPane cargaLaminas;
+	public JScrollPane cargaLaminas;
 	private Configuraciones config;
 	public static final int PORTADA = 0;
 	public static final int JUEGO = 1;

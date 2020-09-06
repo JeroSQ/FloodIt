@@ -10,6 +10,10 @@ import java.util.*;
 
 public class LaminaColores extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Frame frame;
 	private Configuraciones config;
 	private JList<String> listaColores;

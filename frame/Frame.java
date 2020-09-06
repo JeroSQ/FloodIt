@@ -2,17 +2,22 @@ package frame;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import laminas.*;
 import juego.*;
 
 public class Frame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private LaminaPortada laminaPortada;
 	private LaminaJuego laminaJuego;
 	private LaminaConfig laminaConfig;
 	private LaminaColores laminaColores;
-	private LaminaInfo laminaInfo;
 	private LaminaStats laminaStats;
 	private LaminaTutorial laminaTutorial;
 	public JScrollPane cargaLaminas;
@@ -21,9 +26,8 @@ public class Frame extends JFrame {
 	public static final int JUEGO = 1;
 	public static final int CONFIG = 2;
 	public static final int COLORES = 3;
-	public static final int INFO = 4;
-	public static final int STATS = 5;
-	public static final int TUTO = 6;
+	public static final int STATS = 4;
+	public static final int TUTO = 5;
 
 	public Frame() { 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -33,11 +37,17 @@ public class Frame extends JFrame {
 		setLocation((int) (pantalla.getWidth() / 2) - getWidth() / 2,(int) (pantalla.getHeight() / 2) - getHeight() / 2);
 		setResizable(false);
 		setTitle("Flood It");
+		ImageIcon icono = new ImageIcon("src/img/icono.png");
+		setIconImage(icono.getImage());
 		config = GestorArchivos.getLastConfig();
 		config.setTablaStats(GestorArchivos.getEstadisticas(config));
 		creaLaminas();
 		addLaminas();
-		setIconImage(toolkit.getImage("src/img/")); //hacer iconos
+		ArrayList<Image> iconos = new ArrayList<Image>();
+		iconos.add(new ImageIcon("src/img/icono32.png").getImage());
+		iconos.add(new ImageIcon("src/img/icono48.png").getImage());
+		iconos.add(new ImageIcon("src/img/icono64.png").getImage());
+		setIconImages(iconos); 
 		laminaPortada.pasameLaminas(laminaJuego);
 		cargaLaminas.setBorder(null);
 		cargaLaminas.setViewportView(laminaPortada);
@@ -50,7 +60,6 @@ public class Frame extends JFrame {
 			}
 		});
 		pack();
-		cargaLaminas.setViewportView(laminaTutorial);
 	}
 
 	public void cambiaLamina(int lamina) {
@@ -71,10 +80,6 @@ public class Frame extends JFrame {
 				cargaLaminas.setViewportView(laminaColores);
 				setTitle("Flood It | Colores Personalizados");
 				laminaColores.cargaSeleccion();
-				break;
-			case INFO:
-				cargaLaminas.setViewportView(laminaInfo);
-				setTitle("Flood It | Información");
 				break;
 			case STATS:
 				cargaLaminas.setViewportView(laminaStats);
@@ -99,10 +104,6 @@ public class Frame extends JFrame {
 		laminaColores.actualizaColores();
 	}
 	
-	public void llamaResetComboJugador() {
-		laminaPortada.resetComboJugador();
-	}
-	
 	private void creaLaminas() {
 		cargaLaminas = new JScrollPane();
 		laminaConfig = new LaminaConfig(this, config);
@@ -110,7 +111,6 @@ public class Frame extends JFrame {
 		laminaJuego = new LaminaJuego(this, config);
 		laminaColores = new LaminaColores(this, config);
 		laminaStats = new LaminaStats(this, config);
-		laminaInfo = new LaminaInfo(this);
 		laminaTutorial = new LaminaTutorial(this);
 	}
 
@@ -119,7 +119,6 @@ public class Frame extends JFrame {
 		cargaLaminas.add(laminaColores);
 		cargaLaminas.add(laminaJuego);
 		cargaLaminas.add(laminaConfig);
-		cargaLaminas.add(laminaInfo);
 		cargaLaminas.add(laminaStats);
 		cargaLaminas.add(laminaTutorial);
 		add(cargaLaminas);

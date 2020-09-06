@@ -10,10 +10,14 @@ import juego.*;
 
 public class LaminaPortada extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private LaminaJuego laminaJuego;
 	private Configuraciones config;
 	private Frame frame;
-	private JComboBox<String> tipoJugador;
+	private JLabel tipoJugador;
 	private Box cajaNorth, cajaSouth;
 	public LaminaPortada(Frame frame, Configuraciones config) {
 		setLayout(new BorderLayout());
@@ -29,10 +33,6 @@ public class LaminaPortada extends JPanel {
 	public void pasameLaminas(LaminaJuego laminaJuego) { 
 		this.laminaJuego = laminaJuego;
 	}
-	
-	public void resetComboJugador() {
-		tipoJugador.setSelectedIndex(0);
-	}
 
 	private void inicializaComponentesPortada() { 
 		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,23 +42,7 @@ public class LaminaPortada extends JPanel {
 		JLabel labelFoto = new JLabel(icono);
 		add(labelFoto, BorderLayout.CENTER);
 		//-------------------------------------Combo Jugador----------------------------------
-		tipoJugador = new JComboBox<String>();
-		tipoJugador.setBounds(5, 15, 90, 20);
-		tipoJugador.addItem("Player");
-		tipoJugador.addItem("Admin");
-		tipoJugador.setPrototypeDisplayValue("TipoJugador");
-		tipoJugador.setMaximumSize(new Dimension(tipoJugador.getWidth(), 25));
-		tipoJugador.setToolTipText("Cambiar Jugador");
-		tipoJugador.addItemListener(new ItemListener() {
-			
-			public void itemStateChanged(ItemEvent e) {
-				if(tipoJugador.getSelectedItem().equals("Admin"))
-					config.setBetaTester(true);
-				else
-					config.setBetaTester(false);
-			}
-			
-		});
+		tipoJugador = new JLabel("                   ");
 		cajaNorth.add(Box.createHorizontalGlue());
 		cajaNorth.add(tipoJugador);
 		//----------------------------------Label Título-------------------------------------
@@ -69,7 +53,7 @@ public class LaminaPortada extends JPanel {
 		cajaNorth.add(titulo);
 		//--------------------------------------Boton Config---------------------------------
 		JButton btnConfig = new JButton("Config.");
-		btnConfig.setPreferredSize(tipoJugador.getMaximumSize());
+		btnConfig.setPreferredSize(tipoJugador.getPreferredSize());
 		btnConfig.setToolTipText("Ir a Configuraciones");
 		btnConfig.addActionListener(new ActionListener() {
 			
@@ -90,8 +74,14 @@ public class LaminaPortada extends JPanel {
 		btnComenzar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				int tuto = -1;
 				laminaJuego.reiniciarJuego();
 				frame.cambiaLamina(Frame.JUEGO);
+				if(config.isTutorialOn()) 
+					tuto = JOptionPane.showConfirmDialog(null, "¿Desea ver el Tutorial?", "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+				if(tuto == 0) 
+					frame.cambiaLamina(Frame.TUTO);
+				config.setTutorial(false);
 			}
 		});
 		cajaSouthBotones.add(Box.createHorizontalGlue());

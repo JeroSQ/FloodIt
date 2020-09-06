@@ -22,6 +22,7 @@ public class GestorArchivos {
 		File path = new File("src/lastConfig.csv");
 		if (!path.exists()) {
 			config.setDefaultConfigs();
+			config.setTutorial(true);
 			return config;
 		}
 		String[] arrayConfig = getCSV(path);
@@ -33,6 +34,7 @@ public class GestorArchivos {
 		config.setSonido(Boolean.parseBoolean(arrayConfig[4]));
 		config.setArchivoStats(new File(arrayConfig[5]));
 		config.setTimer(Boolean.parseBoolean(arrayConfig[6]));
+		config.setTutorial(false);
 		return config;
 	}
 

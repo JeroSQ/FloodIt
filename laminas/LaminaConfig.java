@@ -14,6 +14,10 @@ import juego.*;
 
 public class LaminaConfig extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Frame frame;
 	private JButton btnCambiaArchivo, btnVerTuto, btnVerArchivo, btnResetTodo, btnPredeterminado,
 		btnPaleta, btnCustom;
@@ -44,10 +48,6 @@ public class LaminaConfig extends JPanel {
 	}
 	
 	public void actualizaBotones() {
-		boolean betaTester = config.isBetaTester();
-		btnVerArchivo.setEnabled(betaTester);
-		btnCambiaArchivo.setEnabled(betaTester);
-		btnResetTodo.setEnabled(betaTester);
 		Enumeration<AbstractButton> elementos = grupoPaleta.getElements();
 		while (elementos.hasMoreElements()) {
 			AbstractButton btnActual = elementos.nextElement();
@@ -201,8 +201,7 @@ public class LaminaConfig extends JPanel {
 		cajas[0].add(Box.createHorizontalGlue());
 		cajas[0].add(btnVolver);
 		//-----------------------BOTON CAMBIA ARCHIVO HS-----------------------------------------
-		btnCambiaArchivo = new JButton("Cambiar Archivo HS");
-		btnCambiaArchivo.setEnabled(false);
+		btnCambiaArchivo = new JButton("Cambiar Archivo Est.");
 		btnCambiaArchivo.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -244,8 +243,7 @@ public class LaminaConfig extends JPanel {
 		cajas[2].add(btnVerTuto);
 		cajas[2].add(Box.createHorizontalGlue());
 		//-------------------------BOTON VER ARCHIVO HS-----------------------------------------
-		btnVerArchivo = new JButton("Ver Archivo HS");
-		btnVerArchivo.setEnabled(false);
+		btnVerArchivo = new JButton("Ver Archivo Est.");
 		btnVerArchivo.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -257,21 +255,20 @@ public class LaminaConfig extends JPanel {
 		cajas[1].add(btnVerArchivo);
 		//-------------------------BOTON RESET TODO.-----------------------------------------
 		btnResetTodo = new JButton("Resetear Todo");
-		btnResetTodo.setEnabled(false);
 		btnResetTodo.setPreferredSize(btnCambiaArchivo.getPreferredSize());
 		btnResetTodo.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				int opcion = -1;
 				opcion = JOptionPane.showOptionDialog(null,
-						"¿Está seguro que quiere resetear todo el juego? No se puede volver atrás.", "Aviso",
+						"¿Está seguro que quiere resetear todo el juego? \n"
+						+ "El juego volverá a su estado de recién instalado. No se puede volver atrás.", "Aviso",
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
 				if (opcion != 0)
 					return;
 				config.getTablaStats().reseteaTabla();
 				GestorArchivos.borraTodo(config);
 				btnPredeterminado.doClick();
-				frame.llamaResetComboJugador();
 				frame.llamaActualizaColores();
 			}
 		});
@@ -333,6 +330,11 @@ public class LaminaConfig extends JPanel {
 		: new String[] { "Círculos", "Cuadrados" };
 		SpinnerListModel modeloShape = new SpinnerListModel(shapes) {
 			
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public Object getNextValue() {
 				String value = super.getValue().equals("Cuadrados") ? "Círculos" : "Cuadrados";
 				return value;

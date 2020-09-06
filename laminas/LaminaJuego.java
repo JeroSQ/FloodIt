@@ -16,13 +16,17 @@ import java.io.File;
 
 public class LaminaJuego extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Configuraciones config;
 	private boolean juegoGanado = false;
 	private boolean gameStarting = true;
 	private boolean quedaTiempo = true;
 	//-----------------------------------------------------
 	private int MOVIMIENTOS_INICIO;
-	private boolean sonido, cuadrados;
+	private boolean sonido, cuadrados, pulsarBoton;
 	private int tamagnoCuadro;
 	private int movimientosRestantes;
 	private int esquinaCuadro;
@@ -67,6 +71,7 @@ public class LaminaJuego extends JPanel {
 	public void reiniciarJuego() { // Vacía los ArrayList y les vuelve a dar valor inicial
 		juegoGanado = false;
 		quedaTiempo = true;
+		pulsarBoton = true;
 		if(!(timer == null)) {
 			timer.reset();
 			timer.stop();
@@ -132,6 +137,11 @@ public class LaminaJuego extends JPanel {
 		btnRestart.setBackground(null);
 		btnRestart.setBorder(null);
 		btnRestart.setAction(new AbstractAction() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public void actionPerformed(ActionEvent e) {
 					actualizaStats();
 					reiniciarJuego();
@@ -192,9 +202,14 @@ public class LaminaJuego extends JPanel {
 			boton.setPreferredSize(new Dimension(TAM_BOTON, TAM_BOTON));
 			boton.setAction(new AbstractAction() {
 				
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				public void actionPerformed(ActionEvent e) {
 					boton.getModel().setPressed(true);
-					if (colorACambiar.equals(boton.getBackground()) || movimientosRestantes <= 0)
+					if (colorACambiar.equals(boton.getBackground()) || movimientosRestantes <= 0 || !pulsarBoton)
 						return;
 					colorACambiar = boton.getBackground();
 					hazUnMovimiento();
@@ -331,6 +346,7 @@ public class LaminaJuego extends JPanel {
 	private void muestraGanado() { // Añade el texto ganado
 		if(!juegoGanado)
 			return;
+		pulsarBoton = false;
 		juegoGanado = false;
 		JLabel ganaste = new JLabel("Ganaste!");
 		ganaste.setForeground(isColorDark(colorACambiar) ? Color.WHITE : Color.BLACK.brighter());

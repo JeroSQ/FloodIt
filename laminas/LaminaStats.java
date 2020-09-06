@@ -11,6 +11,10 @@ import tempo.TimeEndedListener;
 
 public class LaminaStats extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Frame frame;
 	private Configuraciones config;
 	private Box[] cajas = new Box[5];
@@ -53,6 +57,10 @@ public class LaminaStats extends JPanel {
 		tabla.setRowHeight(tabla.getRowHeight() * 2);
 		ListModel lm = new AbstractListModel() {
 			
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			String[] headerRows = {"<html><body>Partidas<br>Jugadas</body></html>",
 					"<html><body>Partidas<br>Ganadas</body></html>",
 					"<html><body>Partidas<br>Perdidas</body></html>",
@@ -80,7 +88,7 @@ public class LaminaStats extends JPanel {
 		rowHeader.setCellRenderer(new RowRenderer(tabla));
 		//-------------------------------INFO TABLA---------------------------------------------
 		actualizaStats();
-		tabla.getTableHeader().setResizingAllowed(false);
+		tabla.getTableHeader().setResizingAllowed(true);
 		tabla.getTableHeader().setReorderingAllowed(false);
 		tabla.setCellSelectionEnabled(false);
 		tabla.setGridColor(Color.CYAN.darker());
@@ -153,13 +161,19 @@ public class LaminaStats extends JPanel {
 		tabla.setModel(new ModeloTablaInvertido(new ModeloTabla(config.getTablaStats().toArray2D())));
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 		renderer.setHorizontalAlignment(JLabel.CENTER);
-		for(int i = 0; i < tabla.getModel().getColumnCount(); i++)
+		for(int i = 0; i < tabla.getModel().getColumnCount(); i++) {
 			tabla.getColumnModel().getColumn(i).setCellRenderer(renderer);
+			
+		}
 	}
 }
 
 class ModeloTabla extends AbstractTableModel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int[][] arrayInt; 
 	
 	public ModeloTabla(int[][] arrayInt) {
@@ -197,6 +211,10 @@ class ModeloTabla extends AbstractTableModel{
 
 class ModeloTablaInvertido extends AbstractTableModel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private TableModel modeloOriginal;
 	private String[] tamagnos = {"10","12","15","20","25"};
 	
@@ -225,6 +243,11 @@ class ModeloTablaInvertido extends AbstractTableModel{
 }
 
 class RowRenderer extends JLabel implements ListCellRenderer{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public RowRenderer(JTable tabla) {
 		JTableHeader header = tabla.getTableHeader();

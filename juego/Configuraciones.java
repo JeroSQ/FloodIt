@@ -7,7 +7,7 @@ import laminas.*;
 
 public class Configuraciones {
 
-	private boolean sonido, cuadrados, betaTester, timer;
+	private boolean sonido, cuadrados, betaTester, timer, tutorial;
 	private int tamagnoCuadro;
 	private int esquinaCuadro;
 	private int paletaColorIndex;
@@ -56,6 +56,10 @@ public class Configuraciones {
 		this.timer = timer;
 	}
 	
+	public void setTutorial(boolean tutorial) {
+		this.tutorial = tutorial;
+	}
+	
 	public void setDefaultConfigs() {
 		setSonido(true);
 		setCuadrados(true);
@@ -82,6 +86,10 @@ public class Configuraciones {
 	
 	public boolean isTimerOn() {
 		return timer;
+	}
+	
+	public boolean isTutorialOn() {
+		return tutorial;
 	}
 
 	public int getTamagnoCuadro() {

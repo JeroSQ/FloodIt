@@ -59,7 +59,8 @@ public class CuadroJuego {
 
 	public Rectangle2D getCuadroBackground() {
 		int scale = timer ? 3 : 2;
-		Rectangle2D recFondo = new Rectangle2D.Double(insetCuadro, insetCuadro * scale, tamCuadroPixel, tamCuadroPixel);
+		Rectangle2D recFondo = new Rectangle2D.Double(insetCuadro, insetCuadro * scale,
+				Math.round(tamCuadroPixel / tamCuadro) * tamCuadro, Math.round(tamCuadroPixel / tamCuadro) * tamCuadro);
 		return recFondo;
 	}
 

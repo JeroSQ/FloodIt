@@ -161,7 +161,26 @@ public class LaminaJuego extends JPanel {
 		
 		Box cajaNorthSur = Box.createHorizontalBox();
 		
-		int time = tamagnoCuadro * 1000;
+		int time = 0;
+		
+		switch(tamagnoCuadro) {
+			
+		case 10:
+			time = 30000;
+			break;
+		case 12:
+			time = 35000;
+			break;
+		case 15:
+			time = 37000;
+			break;
+		case 20:
+			time = 55000;
+			break;
+		case 25:
+			time = 80000;
+			break;
+		}
 		
 		timer = new JTimer(2,time,true, SwingConstants.CENTER);
 		cajaNorthSur.add(Box.createHorizontalGlue());

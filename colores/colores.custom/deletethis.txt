@@ -1,0 +1,1 @@
+Please delete this file upon downloading. It is just a placeholder for this folder so that github doesn't remove it. In this folder your custom color palettes are stored.

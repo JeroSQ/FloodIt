@@ -20,6 +20,14 @@ public class GestorArchivos {
 	public static Configuraciones getLastConfig() {
 		Configuraciones config = new Configuraciones();
 		File path = new File("src/lastConfig.csv");
+		File pathCustom = new File("src/colores/colores.custom");
+		if(!pathCustom.exists())
+			try {
+				pathCustom.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		if (!path.exists()) {
 			config.setDefaultConfigs();
 			config.setTutorial(true);

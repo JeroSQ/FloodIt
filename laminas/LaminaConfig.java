@@ -23,13 +23,13 @@ public class LaminaConfig extends JPanel {
 		btnPaleta, btnCustom;
 	private JCheckBox boxSonido, btnTimer;
 	private JLabel labelShape, labelEsquina;
-	private Border bordeBtnCustom;
 	private JSpinner spinnerShape;
 	private String pathRoot = "src/img/";
 	private String pathFormat = ".png";
 	private Configuraciones config;
 	private ButtonGroup grupoPaleta;
 	private Box[] cajas = new Box[11];
+	private Box cajaColorPre = Box.createVerticalBox();
 
 	public LaminaConfig(Frame frame, Configuraciones config) {
 		setBackground(Color.CYAN.darker());
@@ -42,9 +42,18 @@ public class LaminaConfig extends JPanel {
 		}
 		inicializaComponentesConfig();
 		for(int i = 0; i < cajas.length; i++){
+			if(i == 6)
+				continue;
+			if(i == 7) {
+				add(cajaColorPre);
+				continue;
+			}
 			add(cajas[i]);
 			add(Box.createVerticalGlue());
 		}
+		cajas[4].setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 1), "Tamaño Cuadro"));
+		cajaColorPre.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 1), "Colores Predefinidos"));
+		cajas[10].setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 1), "Esquina de Inicio"));
 	}
 	
 	public void actualizaBotones() {
@@ -166,6 +175,8 @@ public class LaminaConfig extends JPanel {
 		}
 		cajas[6].add(Box.createHorizontalGlue());
 		cajas[7].add(Box.createHorizontalGlue());
+		cajaColorPre.add(cajas[6]);
+		cajaColorPre.add(cajas[7]);
 	}
 	
 	private void creaLabels() {

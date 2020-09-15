@@ -13,7 +13,7 @@ public class CuadroJuego {
 	private double tamCuadro;
 	private boolean cuadrados, timer;
 	private Color[] paletaColor;
-	private int widthSinInset, tamCuadroPixel, insetCuadro;
+	private int widthSinInset, heightSinInset, tamCuadroPixel, insetCuadroWidth, insetCuadroHeight;
 	private double sobras;
 
 	private void obtieneConfig(Configuraciones config) {
@@ -24,23 +24,29 @@ public class CuadroJuego {
 	}
 
 	public ArrayList<RectangularShape> generaNuevoCuadro(Configuraciones config, Frame frame) { // Genera un ArrayList
-																								// de Rectangle2D
+																								// de Rectangle2D o Ellipse2D
 		obtieneConfig(config);
-		int scale = config.isTimerOn() ? 3 : 2;
-		widthSinInset = frame.getContentPane().getWidth();
-		tamCuadroPixel = (int) (widthSinInset / 1.26666666666);
-		sobras = (tamCuadroPixel / tamCuadro) % 1 > 0.5 ? 0 : (tamCuadroPixel / tamCuadro) % 1;
-		insetCuadro = (int) (((widthSinInset - tamCuadroPixel) + sobras * tamCuadro) / 2);
-		// System.out.println(widthSinInset + " " + tamCuadroPixel + " " + insetCuadro);
+		int timerHeight = timer ? 25 : -25;
+		
+		widthSinInset = frame.getContentPane().getWidth(); 
+		heightSinInset = frame.getContentPane().getHeight();
+		
+		tamCuadroPixel = widthSinInset < heightSinInset ? (int) (widthSinInset / 1.26666666666) 
+				: (int)(heightSinInset / 1.69);    //Esto me da el 300x300 en la resolución mía
+		sobras = (tamCuadroPixel / tamCuadro) % 1 > 0.5 ? 0 : (tamCuadroPixel / tamCuadro) % 1; // Esto es lo que sobra si es que
+																								// tamCuadroPixel no es múltiplo de los tamaños
+		insetCuadroWidth = (int) (((widthSinInset - tamCuadroPixel) + sobras * tamCuadro) / 2); //Inset que tiene que tener el cuadro ~40px
+		insetCuadroHeight = (int)(((heightSinInset - tamCuadroPixel) + sobras * tamCuadro) / 2 + timerHeight);
+		
 		for (int i = 0; i < tamCuadro; i++) {
 			for (int j = 0; j < tamCuadro; j++) {
 				if (cuadrados) {
-					cuadros.add(new Rectangle2D.Double((i * Math.round(tamCuadroPixel / tamCuadro)) + insetCuadro,
-							(j * Math.round(tamCuadroPixel / tamCuadro)) + insetCuadro * scale,
+					cuadros.add(new Rectangle2D.Double((i * Math.round(tamCuadroPixel / tamCuadro)) + insetCuadroWidth,
+							(j * Math.round(tamCuadroPixel / tamCuadro)) + insetCuadroHeight,
 							Math.round(tamCuadroPixel / tamCuadro), Math.round(tamCuadroPixel / tamCuadro)));
 				} else {
-					cuadros.add(new Ellipse2D.Double((i * Math.round(tamCuadroPixel / tamCuadro)) + insetCuadro,
-							(j * Math.round(tamCuadroPixel / tamCuadro)) + insetCuadro * scale,
+					cuadros.add(new Ellipse2D.Double((i * Math.round(tamCuadroPixel / tamCuadro)) + insetCuadroWidth,
+							(j * Math.round(tamCuadroPixel / tamCuadro)) + insetCuadroHeight,
 							Math.round(tamCuadroPixel / tamCuadro), Math.round(tamCuadroPixel / tamCuadro)));
 				}
 			}
@@ -58,8 +64,7 @@ public class CuadroJuego {
 	}
 
 	public Rectangle2D getCuadroBackground() {
-		int scale = timer ? 3 : 2;
-		Rectangle2D recFondo = new Rectangle2D.Double(insetCuadro, insetCuadro * scale,
+		Rectangle2D recFondo = new Rectangle2D.Double(insetCuadroWidth, insetCuadroHeight,
 				Math.round(tamCuadroPixel / tamCuadro) * tamCuadro, Math.round(tamCuadroPixel / tamCuadro) * tamCuadro);
 		return recFondo;
 	}

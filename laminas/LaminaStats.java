@@ -106,7 +106,9 @@ public class LaminaStats extends JPanel {
 		scroll.setViewportView(tabla);
 		scroll.setCorner(JScrollPane.UPPER_LEFT_CORNER, tamagnos);
 		scroll.setMaximumSize(new Dimension(frame.getWidth(), (int) (tabla.getRowHeight() * 6.6)));
+		cajas[1].add(Box.createHorizontalGlue());
 		cajas[1].add(scroll);
+		cajas[1].add(Box.createHorizontalGlue());
 		//---------------------------BOTON RESET HS-----------------------------------------
 		JButton btnResetHS = new JButton("Resetear Estadísticas");
 		btnResetHS.addActionListener(new ActionListener() {

@@ -213,7 +213,7 @@ public class LaminaJuego extends JPanel {
 
 	//-----------------------------------------BOTONES COLOR-----------------------------------------
 	private void creaBotonesColor() { // Crea 6 botones de colores que cambian el color
-		final int TAM_BOTON = 40;
+		final int TAM_BOTON = (int) (frame.getHeight() / 12.675);
 		lmnBtn.removeAll();
 		for (int i = 0; i < 6; i++) {
 			JButton boton = new JButton();

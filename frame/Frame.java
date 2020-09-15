@@ -33,9 +33,10 @@ public class Frame extends JFrame {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension pantalla = toolkit.getScreenSize();
 		//pantalla = new Dimension(1366, 768);
-		setSize((int) (((pantalla.getHeight()) / 2.3) * 0.81), (int) (pantalla.getHeight() / 2.13));
+		pantalla = new Dimension(1920, 1080);
+		setMinimumSize(new Dimension((int) (((pantalla.getHeight()) / 2.3) * 0.81 + getInsets().right ), (int) (pantalla.getHeight() / 2.13)));
 		setLocation((int) (pantalla.getWidth() / 2) - getWidth() / 2,(int) (pantalla.getHeight() / 2) - getHeight() / 2);
-		setResizable(false);
+		setResizable(true);
 		setTitle("Flood It");
 		ImageIcon icono = new ImageIcon("src/img/icono.png");
 		setIconImage(icono.getImage());
@@ -60,6 +61,7 @@ public class Frame extends JFrame {
 			}
 		});
 		pack();
+		setMinimumSize(new Dimension(390, 541));
 	}
 
 	public void cambiaLamina(int lamina) {

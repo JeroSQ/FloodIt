@@ -85,7 +85,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 		
 		//-------------------------------------------------CAJA 1-------------------------------------
 		
-		JLabel labelIndice = new JLabel(" Índices");
+		JLabel labelIndice = new JLabel(" Indices");
 		labelIndice.setFont(new Font("Serif", Font.BOLD, frame.getWidth() / 17));
 		labelIndice.setAlignmentX(LEFT_ALIGNMENT);
 		

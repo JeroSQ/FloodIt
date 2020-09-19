@@ -10,9 +10,6 @@ import juego.*;
 
 public class Frame extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private LaminaPortada laminaPortada;
 	private LaminaJuego laminaJuego;

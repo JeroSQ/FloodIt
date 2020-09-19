@@ -231,9 +231,9 @@ public class LaminaJuego extends JPanel {
 					if (colorACambiar.equals(boton.getBackground()) || movimientosRestantes <= 0 || !pulsarBoton)
 						return;
 					colorACambiar = boton.getBackground();
-					hazUnMovimiento();
 					if(config.isTimerOn() && !timer.isTimerRunning() && !juegoGanado)
 						timer.start();
+					hazUnMovimiento();
 				}
 			});
 			mapaInput.put(KeyStroke.getKeyStroke(Integer.toString(i + 1)), "accionBtn" + i);

@@ -63,6 +63,8 @@ public class LaminaJuego extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		actualizaCuadro(g2);
+		cuadros.clear();
+		cuadros = cuadro.generaNuevoCuadro(config, frame);
 		if (juegoGanado) {
 			muestraGanado();
 		}

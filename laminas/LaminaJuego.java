@@ -83,7 +83,7 @@ public class LaminaJuego extends JPanel {
 	}
 
 	public void reiniciarJuego() { // Vacía los ArrayList y les vuelve a dar valor inicial
-		juegoGanado = true;
+		juegoGanado = false;
 		quedaTiempo = true;
 		pulsarBoton = true;
 		if(!(timer == null)) {

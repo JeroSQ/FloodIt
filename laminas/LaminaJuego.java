@@ -32,7 +32,8 @@ public class LaminaJuego extends JPanel {
 	private int esquinaCuadro;
 	private Color paletaColores[];
 	//-----------------------------------------------------
-	private JLabel labelMovRest;
+	private JLabel labelMovRest, ganaste, movs;
+	private JButton[] btnsColor = new JButton[6];
 	private JButton btnRestart;
 	private ArrayList<Color> colores; 
 	private ArrayList<Integer> indexes = new ArrayList<Integer>(); 
@@ -46,7 +47,8 @@ public class LaminaJuego extends JPanel {
 	private Box cajaNorth = Box.createHorizontalBox();
 	private InputMap mapaInput = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 	private ActionMap mapaA = getActionMap();
-
+	private Box cajaNorthSur;
+	
 	public LaminaJuego(Frame frame, Configuraciones config) {
 		setLayout(new BorderLayout());
 		setBackground(Color.CYAN.darker());
@@ -65,13 +67,23 @@ public class LaminaJuego extends JPanel {
 		actualizaCuadro(g2);
 		cuadros.clear();
 		cuadros = cuadro.generaNuevoCuadro(config, frame);
+		labelMovRest.setFont(new Font("Roboto", Font.PLAIN, frame.getContentPane().getWidth() / 24));
+		timer.setFont(new Font("Serif", Font.PLAIN, (int) (frame.getContentPane().getHeight() / 15.36)));
+		final int TAM_BOTON = (int) (frame.getHeight() / 12.675);
+		for(JButton btn : btnsColor)
+			btn.setPreferredSize(new Dimension(TAM_BOTON, TAM_BOTON));
+		cajaNorthSur.remove(2);
+		cajaNorthSur.add(Box.createVerticalStrut((int) (frame.getContentPane().getHeight() / 7.68)));
+		ganaste.setFont(new Font("Roboto", Font.BOLD, frame.getContentPane().getWidth() / 7));
+		movs.setFont(new Font("Roboto", 3, frame.getContentPane().getWidth() / 25));
+		updateUI();
 		if (juegoGanado) {
 			muestraGanado();
 		}
 	}
 
 	public void reiniciarJuego() { // Vacía los ArrayList y les vuelve a dar valor inicial
-		juegoGanado = false;
+		juegoGanado = true;
 		quedaTiempo = true;
 		pulsarBoton = true;
 		if(!(timer == null)) {
@@ -109,6 +121,8 @@ public class LaminaJuego extends JPanel {
 	private void inicializaComponentesJuego() { 
 		//-------------------------------------LABEL MOV REST----------------------------------------
 		cajaNorth.removeAll();
+		ganaste = new JLabel("Ganaste!");
+		movs = new JLabel();
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
@@ -161,7 +175,7 @@ public class LaminaJuego extends JPanel {
 		cajaNorth.add(btnRestart);
 		cajaNorth.add(Box.createHorizontalGlue());
 		
-		Box cajaNorthSur = Box.createHorizontalBox();
+		cajaNorthSur = Box.createHorizontalBox();
 		
 		int time = 0;
 		
@@ -241,6 +255,7 @@ public class LaminaJuego extends JPanel {
 			mapaInput.put(KeyStroke.getKeyStroke(Integer.toString(i + 1)), "accionBtn" + i);
 			mapaA.put("accionBtn" + i, boton.getAction());
 			lmnBtn.add(boton);
+			btnsColor[i] = boton;
 		}
 		//----------------------------------------------------------------------------------------------
 	}
@@ -369,12 +384,11 @@ public class LaminaJuego extends JPanel {
 			return;
 		pulsarBoton = false;
 		juegoGanado = false;
-		JLabel ganaste = new JLabel("Ganaste!");
 		ganaste.setForeground(isColorDark(colorACambiar) ? Color.WHITE : Color.BLACK.brighter());
-		ganaste.setFont(new Font("Roboto", Font.BOLD, 48));
-		JLabel movs = new JLabel("Lo hiciste en " + (MOVIMIENTOS_INICIO - movimientosRestantes) + " movimientos");
+		ganaste.setFont(new Font("Roboto", Font.BOLD, frame.getContentPane().getWidth() / 7));
+		movs.setText("   Lo hiciste en " + (MOVIMIENTOS_INICIO - movimientosRestantes) + " movimientos");
 		movs.setForeground(isColorDark(colorACambiar) ? Color.WHITE : Color.BLACK.brighter());
-		movs.setFont(new Font("Roboto", 3, 15));
+		movs.setFont(new Font("Roboto", 3, frame.getContentPane().getWidth() / 25));
 		
 		Box cajaEnclose = Box.createHorizontalBox();
 		Box cajaFiller1 = Box.createHorizontalBox();

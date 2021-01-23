@@ -5,6 +5,8 @@ miscellanous things like reading/writing files, playing sounds, and a long etcet
 It's about ~3100 lines of code without counting the classes in the icon package since those were not written by me. I'm 
 using the JTattoo library for the app's looks.
 
+# [How does it look like?](https://github.com/JeroSQ/FloodIt/blob/master/PICTURES.md)
+
 Most of the code variables, classes, comments, packages are in Spanish since I'm from Argentina. I have a version of it with all the strings translated to English, I just need to package it and push it.
 
 Thanks for reading!

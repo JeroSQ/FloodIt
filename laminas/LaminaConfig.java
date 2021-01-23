@@ -51,9 +51,9 @@ public class LaminaConfig extends JPanel {
 			add(cajas[i]);
 			add(Box.createVerticalGlue());
 		}
-		cajas[4].setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 1), "Tamaño Cuadro"));
-		cajaColorPre.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 1), "Colores Predefinidos"));
-		cajas[10].setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 1), "Esquina de Inicio"));
+		cajas[4].setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 1), "Board Size"));
+		cajaColorPre.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 1), "Preset Colors"));
+		cajas[10].setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK, 1), "Start Corner"));
 	}
 	
 	public void actualizaBotones() {
@@ -181,20 +181,20 @@ public class LaminaConfig extends JPanel {
 	
 	private void creaLabels() {
 		//----------------------------LABEL FORMA:----------------------------------------
-		labelShape = new JLabel("Forma:");
+		labelShape = new JLabel("Shape:");
 		labelShape.setFont(new Font("Roboto", Font.PLAIN, 14));
 		//-----------------------LABEL TAMAÑO-----------------------------------------
-		JLabel labelTamagno = new JLabel("Tamaño del Cuadro");
+		JLabel labelTamagno = new JLabel("Board Size");
 		labelTamagno.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		labelTamagno.setFont(new Font("Roboto", Font.PLAIN, 20));
 		cajas[3].add(labelTamagno);
 		//-----------------------LABEL COLORES PREDEF-----------------------------------------
-		JLabel labelColor = new JLabel("Colores Predefinidos");
+		JLabel labelColor = new JLabel("Preset Colors");
 		labelColor.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		labelColor.setFont(new Font("Roboto", Font.PLAIN, 20));
 		cajas[5].add(labelColor);
 		//-----------------------LABEL ESQUINA INICIO-----------------------------------------
-		labelEsquina = new JLabel("Esquina de Inicio");
+		labelEsquina = new JLabel("Start Corner");
 		labelEsquina.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		labelEsquina.setFont(new Font("Roboto", Font.PLAIN, 20));
 		
@@ -202,7 +202,7 @@ public class LaminaConfig extends JPanel {
 	
 	private void creaCompGenerales() {
 		//---------------------------BOTON VOLVER-----------------------------------------
-		JButton btnVolver = new JButton("Volver");
+		JButton btnVolver = new JButton("Back");
 		btnVolver.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -212,7 +212,7 @@ public class LaminaConfig extends JPanel {
 		cajas[0].add(Box.createHorizontalGlue());
 		cajas[0].add(btnVolver);
 		//-----------------------BOTON CAMBIA ARCHIVO HS-----------------------------------------
-		btnCambiaArchivo = new JButton("Cambiar Archivo Est.");
+		btnCambiaArchivo = new JButton("Change Stats File");
 		btnCambiaArchivo.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -242,7 +242,7 @@ public class LaminaConfig extends JPanel {
 		cajas[2].add(Box.createHorizontalGlue());
 		cajas[2].add(btnCambiaArchivo);
 		//-----------------------BOTON VER TUTORIAL-----------------------------------------
-		btnVerTuto = new JButton("Ver Tutorial");
+		btnVerTuto = new JButton("Tutorial");
 		btnVerTuto.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -254,26 +254,26 @@ public class LaminaConfig extends JPanel {
 		cajas[2].add(btnVerTuto);
 		cajas[2].add(Box.createHorizontalGlue());
 		//-------------------------BOTON VER ARCHIVO HS-----------------------------------------
-		btnVerArchivo = new JButton("Ver Archivo Est.");
+		btnVerArchivo = new JButton("View Stats File");
 		btnVerArchivo.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "El archivo se encuentra en: " + config.getArchivoStats().getAbsolutePath());
+				JOptionPane.showMessageDialog(null, "Stats file located in: " + config.getArchivoStats().getAbsolutePath());
 			}
 		});
 		btnVerArchivo.setPreferredSize(new Dimension(btnCambiaArchivo.getPreferredSize()));
 		cajas[1].add(Box.createHorizontalGlue());
 		cajas[1].add(btnVerArchivo);
 		//-------------------------BOTON RESET TODO.-----------------------------------------
-		btnResetTodo = new JButton("Resetear Todo");
+		btnResetTodo = new JButton("Reset All");
 		btnResetTodo.setPreferredSize(btnCambiaArchivo.getPreferredSize());
 		btnResetTodo.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				int opcion = -1;
 				opcion = JOptionPane.showOptionDialog(null,
-						"¿Está seguro que quiere resetear todo el juego? \n"
-						+ "El juego volverá a su estado de recién instalado. No se puede volver atrás.", "Aviso",
+						"Are you sure you want to reset the whole game? \n"
+						+ "The game will reset to it's initial state. This action cannot be undone.", "Warning",
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
 				if (opcion != 0)
 					return;
@@ -287,7 +287,7 @@ public class LaminaConfig extends JPanel {
 		cajas[1].add(btnResetTodo);
 		cajas[1].add(Box.createHorizontalGlue());
 		//-----------------------BOTON COLOR CUSTOM-----------------------------------------
-		btnCustom = new JButton("Elegir Colores Personalizados");
+		btnCustom = new JButton("Choose Custom Colors");
 		btnCustom.setBorder(BorderFactory.createLineBorder(new Color(178,178,178), 2));
 		btnCustom.addActionListener(new ActionListener() {
 
@@ -337,8 +337,8 @@ public class LaminaConfig extends JPanel {
 		cajas[0].add(Box.createHorizontalGlue());
 		cajas[0].add(btnPredeterminado);
 		//---------------------------SPINNER SHAPE-----------------------------------------
-		String shapes[] = config.isFormaCuadrados() ? new String[] { "Cuadrados", "Círculos" }
-		: new String[] { "Círculos", "Cuadrados" };
+		String shapes[] = config.isFormaCuadrados() ? new String[] { "Squares", "Circles" }
+		: new String[] { "Circles", "Squares" };
 		SpinnerListModel modeloShape = new SpinnerListModel(shapes) {
 			
 			/**
@@ -347,12 +347,12 @@ public class LaminaConfig extends JPanel {
 			private static final long serialVersionUID = 1L;
 
 			public Object getNextValue() {
-				String value = super.getValue().equals("Cuadrados") ? "Círculos" : "Cuadrados";
+				String value = super.getValue().equals("Squares") ? "Circles" : "Squares";
 				return value;
 			}
 			
 			public Object getPreviousValue() {
-				String value = super.getValue().equals("Cuadrados") ? "Círculos" : "Cuadrados";
+				String value = super.getValue().equals("Squares") ? "Circles" : "Squares";
 				return value;
 			}
 		};
@@ -362,14 +362,14 @@ public class LaminaConfig extends JPanel {
 		spinnerShape.addChangeListener(new ChangeListener() {
 			
 			public void stateChanged(ChangeEvent e) {
-				config.setCuadrados(spinnerShape.getValue().equals("Cuadrados") ? true : false);
+				config.setCuadrados(spinnerShape.getValue().equals("Squares") ? true : false);
 			}
 		});
 		JFormattedTextField tf = ((JSpinner.DefaultEditor) spinnerShape.getEditor()).getTextField();
 		tf.setEditable(false);
 		//---------------------------------POP UP MENU-------------------------------------
 		JPopupMenu menu = new JPopupMenu();
-		JMenuItem color = new JMenuItem("Colores P.");
+		JMenuItem color = new JMenuItem("Custom Colors");
 		color.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -377,7 +377,7 @@ public class LaminaConfig extends JPanel {
 			}
 			
 		});
-		JMenuItem config = new JMenuItem("Config");
+		JMenuItem config = new JMenuItem("Settings");
 		config.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -385,7 +385,7 @@ public class LaminaConfig extends JPanel {
 			}
 			
 		});
-		JMenuItem stats = new JMenuItem("Estadísticas");
+		JMenuItem stats = new JMenuItem("Stats");
 		stats.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {

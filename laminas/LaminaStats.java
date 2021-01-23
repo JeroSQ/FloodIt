@@ -37,7 +37,7 @@ public class LaminaStats extends JPanel {
 			cajas[i] = Box.createHorizontalBox();
 			}
 		//----------------------------------BOTON VOLVER----------------------------------------
-		JButton btnVolver = new JButton("Volver");
+		JButton btnVolver = new JButton("Back");
 		btnVolver.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -48,7 +48,7 @@ public class LaminaStats extends JPanel {
 		cajas[0].add(btnVolver);
 		cajas[0].add(Box.createHorizontalGlue());
 		//-----------------------------------LABEL ESTADISTICAS--------------------------------
-		JLabel labelStats = new JLabel("Estadísticas");
+		JLabel labelStats = new JLabel("Stats");
 		labelStats.setFont(new Font("Roboto", Font.PLAIN, 24));
 		cajas[0].add(labelStats);
 		cajas[0].add(Box.createHorizontalGlue());
@@ -61,12 +61,12 @@ public class LaminaStats extends JPanel {
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
-			String[] headerRows = {"<html><body>Partidas<br>Jugadas</body></html>",
-					"<html><body>Partidas<br>Ganadas</body></html>",
-					"<html><body>Partidas<br>Perdidas</body></html>",
-					"<html><body>% de P.<br>Ganadas</body></html>",
-					"<html><body>Mejor<br>Partida</body></html>",
-					"<html><body>Mejor<br>Tiempo</body></html>"
+			String[] headerRows = {"<html><body>Games<br>Played</body></html>",
+					"<html><body>Games<br>Won</body></html>",
+					"<html><body>Games<br>Lost</body></html>",
+					"<html><body>% of Won<br> Games</body></html>",
+					"<html><body>Best<br>Game</body></html>",
+					"<html><body>Best<br>Time</body></html>"
 			};
 			
 			public Object getElementAt(int index) {
@@ -93,7 +93,7 @@ public class LaminaStats extends JPanel {
 		tabla.setCellSelectionEnabled(false);
 		tabla.setGridColor(Color.CYAN.darker());
 		//LABEL ESQUINA
-		JLabel tamagnos = new JLabel("Tamaño➡");
+		JLabel tamagnos = new JLabel("Size➡");
 		tamagnos.setOpaque(true);
 		tamagnos.setForeground(tabla.getTableHeader().getForeground());
 		tamagnos.setBackground(tabla.getTableHeader().getBackground());
@@ -110,13 +110,13 @@ public class LaminaStats extends JPanel {
 		cajas[1].add(scroll);
 		cajas[1].add(Box.createHorizontalGlue());
 		//---------------------------BOTON RESET HS-----------------------------------------
-		JButton btnResetHS = new JButton("Resetear Estadísticas");
+		JButton btnResetHS = new JButton("Reset Stats");
 		btnResetHS.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				int opcion = -1;
 				opcion = JOptionPane.showOptionDialog(null,
-						"¿Está seguro que quiere resetear las Estadísticas?", "Aviso",
+						"Are you sure you want to reset your stats?", "Warning",
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
 				if (opcion != 0)
 					return;
@@ -129,7 +129,7 @@ public class LaminaStats extends JPanel {
 		cajas[2].add(Box.createHorizontalGlue());
 		//--------------------------------------------------------------------------------------
 		JPopupMenu menu = new JPopupMenu();
-		JMenuItem color = new JMenuItem("Colores P.");
+		JMenuItem color = new JMenuItem("Custom Colors");
 		color.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -137,7 +137,7 @@ public class LaminaStats extends JPanel {
 			}
 			
 		});
-		JMenuItem config = new JMenuItem("Config");
+		JMenuItem config = new JMenuItem("Settings");
 		config.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -145,7 +145,7 @@ public class LaminaStats extends JPanel {
 			}
 			
 		});
-		JMenuItem stats = new JMenuItem("Estadísticas");
+		JMenuItem stats = new JMenuItem("Stats");
 		stats.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {

@@ -95,7 +95,7 @@ public class LaminaColores extends JPanel {
 		boxFlecha.add(flechas[i]);
 		}
 		//----------------------------------BOTON VOLVER----------------------------------------
-		JButton btnVolver = new JButton("Volver");
+		JButton btnVolver = new JButton("Back");
 		btnVolver.setBounds(8, 5, 80, 25);
 		btnVolver.addActionListener(new ActionListener() {
 
@@ -107,7 +107,7 @@ public class LaminaColores extends JPanel {
 		cajaVolv.add(Box.createHorizontalStrut(frame.getWidth() / 10));
 		cajaVolv.add(btnVolver, BorderLayout.NORTH);
 		cajaVolv.add(Box.createHorizontalGlue());
-		JLabel labelColor = new JLabel("Colores Personalizados");
+		JLabel labelColor = new JLabel("Custom Colors");
 		labelColor.setFont(new Font("Roboto", Font.PLAIN, frame.getWidth() / 15));
 		cajaVolv.add(labelColor);
 		cajaVolv.add(Box.createHorizontalGlue());
@@ -122,7 +122,7 @@ public class LaminaColores extends JPanel {
 				actualizaBotones(true);
 				for(int i = 0; i < labelsColor.length; i++) {
 					if(listaColores.getSelectedIndex() != -1 
-							&& !nombres[listaColores.getSelectedIndex()].equals("Vacío"))
+							&& !nombres[listaColores.getSelectedIndex()].equals("Empty"))
 						labelsColor[i].setBackground(GestorArchivos.getPaleta(listaColores.getSelectedIndex() + 6)[i]);
 					else
 						labelsColor[i].setBackground(Color.CYAN.darker());
@@ -132,10 +132,10 @@ public class LaminaColores extends JPanel {
 		caja1.add(listaColores);
 		//--------------------------------LABEL PALETA SELEC--------------------------------------
 		JLabel labelPaletaSelec = new JLabel("<html><div style='text-align: center;'>"
-				+ "<body>Paleta<br> Seleccionada:</body><html>");
+				+ "<body>Selected<br> Palette:</body><html>");
 		boxHorizontales[1].add(labelPaletaSelec);
 		//--------------------------------BOTON SELECCIONAR--------------------------------------
-		btnSelec = new JButton("Usar paleta seleccionada");
+		btnSelec = new JButton("Use selected palette");
 		btnSelec.setMinimumSize(new Dimension(frame.getWidth() / 2,25));
 		btnSelec.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -152,31 +152,31 @@ public class LaminaColores extends JPanel {
 		});
 		panelBtn.add(btnSelec);
 		//------------------------------------BOTON CREAR----------------------------------------
-		btnCrear = new JButton("Crear nueva paleta");
+		btnCrear = new JButton("Create new palette");
 		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Color[] arrayColores = new Color[6];
 				Object resultado = creaSelectoresColor();
 				if(resultado == null) {
-					JOptionPane.showMessageDialog(null, "No pueden haber colores vacíos.");
+					JOptionPane.showMessageDialog(null, "There cannot be empty colors.");
 					return;
 				}
 				if(resultado.equals("Duplicado")) {
-					JOptionPane.showMessageDialog(null, "No pueden haber colores duplicados.");
+					JOptionPane.showMessageDialog(null, "There cannot be duplicate colors");
 					return;
 				}
 				String nombre;
 				do {
-					nombre = JOptionPane.showInputDialog("Introduce nombre paleta (sin comas) Max. 25 caracteres.");
+					nombre = JOptionPane.showInputDialog("Set palette name (no commas) Max. 25 characters.");
 					if(nombre == null)
 						break;
 				}while(nombre.length() > 25 || nombre.contains(",") || nombre.trim().isEmpty()); 
 				arrayColores = (Color[]) resultado;
 				boolean paletaCorrecta = GestorArchivos.setPaleta(arrayColores, nombre, getIndexVacio());
 				if(paletaCorrecta)
-					JOptionPane.showMessageDialog(null, "La paleta de colores fue creada correctamente");
+					JOptionPane.showMessageDialog(null, "Palette was successfully created.");
 				else
-					JOptionPane.showMessageDialog(null, "No se pudo crear la paleta", "Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Palette could not be created.", "Error",JOptionPane.ERROR_MESSAGE);
 				int vacio = getIndexVacio();
 				config.setPaletaColorIndex(vacio + 6);
 				config.setPaletaColor(GestorArchivos.getPaleta(config.getPaletaColorIndex()));
@@ -193,11 +193,11 @@ public class LaminaColores extends JPanel {
 		btnCrear.setMinimumSize(new Dimension(frame.getWidth() / 2,25));
 		panelBtn.add(btnCrear);
 		//-----------------------------------------BOTÓN BORRAR-----------------------------------------
-		btnBorrar = new JButton("Borrar seleccionado/s");
+		btnBorrar = new JButton("Empty selection");
 		btnBorrar.setPreferredSize(new Dimension(frame.getWidth() / 2,25));
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int respuesta = JOptionPane.showConfirmDialog(null, "¿Está Seguro?", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+				int respuesta = JOptionPane.showConfirmDialog(null, "Are you sure?", "Warning", JOptionPane.INFORMATION_MESSAGE);
 				if(respuesta != 0)
 					return;
 				GestorArchivos.borraPaleta(listaColores.getSelectedIndices());
@@ -210,7 +210,7 @@ public class LaminaColores extends JPanel {
 		});
 		panelBtn.add(btnBorrar);
 		//--------------------------------------BOTON SELEC TODOS--------------------------------------
-		JButton btnSelecAll = new JButton("Seleccionar Todos");
+		JButton btnSelecAll = new JButton("Select All");
 		btnSelecAll.setPreferredSize(new Dimension(frame.getWidth() / 2,25));
 		btnSelecAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -220,7 +220,7 @@ public class LaminaColores extends JPanel {
 		});
 		panelBtn.add(btnSelecAll);
 		//------------------------------------BOTON DE-SELEC TODOS--------------------------------------
-		JButton btnDeSelecAll = new JButton("Deseleccionar Todos");
+		JButton btnDeSelecAll = new JButton("Unselect All");
 		btnDeSelecAll.setPreferredSize(new Dimension(frame.getWidth() / 2,25));
 		btnDeSelecAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -230,22 +230,22 @@ public class LaminaColores extends JPanel {
 		});
 		panelBtn.add(btnDeSelecAll);
 		//-----------------------------------BOTON RENOMBRAR--------------------------------------------
-		btnRename = new JButton("Renombrar Seleccionado");
+		btnRename = new JButton("Rename Selected Palette");
 		btnRename.setPreferredSize(new Dimension(frame.getWidth() / 2,25));
 		btnRename.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nuevoNombre;
 				do {
-					nuevoNombre = JOptionPane.showInputDialog("Introduce nombre paleta (sin comas) Max. 25 Caracteres.");
+					nuevoNombre = JOptionPane.showInputDialog("Set palette name (no commas) Max. 25 characters.");
 					if(nuevoNombre == null)
 						return;
 				}while(nuevoNombre.length() > 25 || nuevoNombre.contains(",") || nuevoNombre.trim().isEmpty());
 				int indexSeleccionado = listaColores.getSelectedIndex();
 				boolean renameCorrecto = GestorArchivos.renombraPaleta(indexSeleccionado, nuevoNombre);
 				if(renameCorrecto)
-					JOptionPane.showMessageDialog(null, "La paleta de colores fue renombrada correctamente");
+					JOptionPane.showMessageDialog(null, "Palette was successfully renamed.");
 				else
-					JOptionPane.showMessageDialog(null, "No se pudo renombrar la paleta", "Error",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Pallete could not be renamed.", "Error",JOptionPane.ERROR_MESSAGE);
 				actualizaBotones(false);
 			}
 		});
@@ -262,7 +262,7 @@ public class LaminaColores extends JPanel {
 		//----------------------------------------------------------------------------------------------
 		actualizaBotones(false);
 		JPopupMenu menu = new JPopupMenu();
-		JMenuItem color = new JMenuItem("Colores P.");
+		JMenuItem color = new JMenuItem("Custom Colors");
 		color.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -270,7 +270,7 @@ public class LaminaColores extends JPanel {
 			}
 			
 		});
-		JMenuItem config = new JMenuItem("Config");
+		JMenuItem config = new JMenuItem("Settings");
 		config.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -278,7 +278,7 @@ public class LaminaColores extends JPanel {
 			}
 			
 		});
-		JMenuItem stats = new JMenuItem("Estadísticas");
+		JMenuItem stats = new JMenuItem("Stats");
 		stats.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -301,7 +301,7 @@ public class LaminaColores extends JPanel {
 		for(int i = 0; i < nombres.length; i++) {
 			nombres[i] = GestorArchivos.getNombrePaleta(i+6);
 				
-			if(btnCreado && nombres[i].equals("Vacío"))
+			if(btnCreado && nombres[i].equals("Empty"))
 					vacios++;
 			if(vacios > 0)
 				btnCrear.setEnabled(true);
@@ -309,11 +309,11 @@ public class LaminaColores extends JPanel {
 				btnCrear.setEnabled(false);
 			
 			if(btnCreado && listaColores.getSelectedIndices().length == 1 
-					&& !nombres[listaColores.getSelectedIndex()].equals("Vacío")) {
+					&& !nombres[listaColores.getSelectedIndex()].equals("Empty")) {
 				btnSelec.setEnabled(true);
 				btnRename.setEnabled(true);
 			}else if(btnCreado && listaColores.getSelectedIndices().length != 1
-					|| nombres[listaColores.getSelectedIndex()].equals("Vacío")) {
+					|| nombres[listaColores.getSelectedIndex()].equals("Empty")) {
 				btnSelec.setEnabled(false);
 				btnRename.setEnabled(false);
 			}
@@ -329,7 +329,7 @@ public class LaminaColores extends JPanel {
 		Color arrayColores[] = new Color[6];
 		JColorChooser color = new JColorChooser();
 		for (int i = 0; i < 6; i++) {
-			arrayColores[i] = color.showDialog(null, "Selecciona Color " + (i + 1), null);
+			arrayColores[i] = color.showDialog(null, "Select Color " + (i + 1), null);
 			if (arrayColores[i] == null)
 				return null;
 			arrayColores[i] = new Color(arrayColores[i].getRed(), arrayColores[i].getGreen()
@@ -344,7 +344,7 @@ public class LaminaColores extends JPanel {
 	private int getIndexVacio() {
 		int indexVacio = -1;
 		for(int i = 0; i < nombres.length; i++) {
-			if(nombres[i].equals("Vacío")) {
+			if(nombres[i].equals("Empty")) {
 				indexVacio = i;
 				break;
 			}

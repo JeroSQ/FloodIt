@@ -51,7 +51,7 @@ public class GestorArchivos {
 				? new File("src/colores/colores.predefinidos/color" + Integer.toString(numPaleta) + ".csv")
 				: new File("src/colores/colores.custom/colorCustom" + Integer.toString(numPaleta) + ".csv");
 		if (getCSV(path) == null)
-			return "Vacío";
+			return "Empty";
 		return getCSV(path)[0];
 	}
 
@@ -81,7 +81,7 @@ public class GestorArchivos {
 			int qArchivos = listFiles.length;
 			if (qArchivos >= 5 || indexVacio == -1)
 				return false;
-			String nombrePaletaFinal = nombrePaleta == null ? "Color Personalizado " + Integer.toString(indexVacio + 1)
+			String nombrePaletaFinal = nombrePaleta == null ? "Custom Color " + Integer.toString(indexVacio + 1)
 					: nombrePaleta;
 			File pathCompleto = new File(path + "/colorCustom" + Integer.toString(indexVacio + 6) + ".csv");
 			pathCompleto.createNewFile();
@@ -141,7 +141,7 @@ public class GestorArchivos {
 
 	public static boolean renombraPaleta(int index, String nuevoNombre) {
 		File path = new File("src/colores/colores.custom/colorCustom" + Integer.toString(index + 6) + ".csv");
-		String nuevoNombreFinal = nuevoNombre == null ? "Color Personalizado " + Integer.toString(index + 1)
+		String nuevoNombreFinal = nuevoNombre == null ? "Custom Color " + Integer.toString(index + 1)
 				: nuevoNombre;
 		String[] csv = getCSV(path);
 		csv[0] = nuevoNombreFinal;

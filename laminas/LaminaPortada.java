@@ -52,9 +52,9 @@ public class LaminaPortada extends JPanel {
 		cajaNorth.add(Box.createHorizontalGlue());
 		cajaNorth.add(titulo);
 		//--------------------------------------Boton Config---------------------------------
-		JButton btnConfig = new JButton("Config.");
+		JButton btnConfig = new JButton("Settings");
 		btnConfig.setPreferredSize(tipoJugador.getPreferredSize());
-		btnConfig.setToolTipText("Ir a Configuraciones");
+		btnConfig.setToolTipText("Go to Settings");
 		btnConfig.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -68,9 +68,9 @@ public class LaminaPortada extends JPanel {
 		//---------------------------------------Boton Comenzar-------------------------------
 		Box cajaSouthBotones = Box.createHorizontalBox();
 		Box cajaFiller = Box.createHorizontalBox();
-		JButton btnComenzar = new JButton("Comenzar");
+		JButton btnComenzar = new JButton("Start");
 		btnComenzar.setPreferredSize(tipoJugador.getMaximumSize());
-		btnComenzar.setToolTipText("Comenzar nueva partida");
+		btnComenzar.setToolTipText("Start a new game");
 		btnComenzar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -78,7 +78,7 @@ public class LaminaPortada extends JPanel {
 				laminaJuego.reiniciarJuego();
 				frame.cambiaLamina(Frame.JUEGO);
 				if(config.isTutorialOn()) 
-					tuto = JOptionPane.showConfirmDialog(null, "¿Desea ver el Tutorial?", "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+					tuto = JOptionPane.showConfirmDialog(null, "Do you want to see the tutorial?", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 				if(tuto == 0) 
 					frame.cambiaLamina(Frame.TUTO);
 				config.setTutorial(false);
@@ -88,9 +88,9 @@ public class LaminaPortada extends JPanel {
 		cajaSouthBotones.add(btnComenzar);
 		cajaSouthBotones.add(Box.createHorizontalGlue());
 		//---------------------------------------Boton Salir----------------------------------
-		JButton btnSalir = new JButton("Salir");
+		JButton btnSalir = new JButton("Exit");
 		btnSalir.setPreferredSize(tipoJugador.getMaximumSize());
-		btnSalir.setToolTipText("Salir del juego");
+		btnSalir.setToolTipText("Exit the game");
 		btnSalir.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -106,7 +106,7 @@ public class LaminaPortada extends JPanel {
 		add(cajaSouth, BorderLayout.SOUTH);
 		//---------------------------------POP UP MENU-------------------------------------
 		JPopupMenu menu = new JPopupMenu();
-		JMenuItem color = new JMenuItem("Colores P.");
+		JMenuItem color = new JMenuItem("Custom Colors");
 		color.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -114,7 +114,7 @@ public class LaminaPortada extends JPanel {
 			}
 			
 		});
-		JMenuItem config = new JMenuItem("Config");
+		JMenuItem config = new JMenuItem("Settings");
 		config.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -122,7 +122,7 @@ public class LaminaPortada extends JPanel {
 			}
 			
 		});
-		JMenuItem stats = new JMenuItem("Estadísticas");
+		JMenuItem stats = new JMenuItem("Stats");
 		stats.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {

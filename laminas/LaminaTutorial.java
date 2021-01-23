@@ -49,7 +49,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 		
 		//-------------------------------------------------CAJA NORTH-------------------------------------
 		
-		JButton btnVolver = new JButton("Volver");
+		JButton btnVolver = new JButton("Back");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.cambiaLamina(Frame.PORTADA);		
@@ -90,8 +90,8 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 		labelIndice.setAlignmentX(LEFT_ALIGNMENT);
 		
 		JButton btnJugar = new JButton();
-	    btnJugar.setText("<HTML><u>Cómo <FONT color=\"#000099\"></FONT>"
-	        + "Jugar<u></HTML>");
+	    btnJugar.setText("<HTML><u>How to <FONT color=\"#000099\"></FONT>"
+	        + "Play<u></HTML>");
 	    btnJugar.setHorizontalAlignment(SwingConstants.LEFT);
 	    btnJugar.setBorderPainted(false);
 	    btnJugar.setOpaque(false);
@@ -104,7 +104,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 	    });
 	    
 	    JButton btnConfig = new JButton();
-	    btnConfig.setText("<HTML><u>Configuraciones<FONT color=\"#000099\"></FONT>"
+	    btnConfig.setText("<HTML><u>Settings<FONT color=\"#000099\"></FONT>"
 	        + "<u></HTML>");
 	    btnConfig.setHorizontalAlignment(SwingConstants.LEFT);
 	    btnConfig.setBorderPainted(false);
@@ -118,7 +118,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 	    });
 	    
 	    JButton btnColor = new JButton();
-	    btnColor.setText("<HTML><u>Colores Personalizados<FONT color=\"#000099\"></FONT>"
+	    btnColor.setText("<HTML><u>Custom Colors<FONT color=\"#000099\"></FONT>"
 	    		+ "<u></HTML>");
 	    btnColor.setHorizontalAlignment(SwingConstants.LEFT);
 	    btnColor.setBorderPainted(false);
@@ -132,7 +132,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 	    });
 	    
 	    JButton btnTimer = new JButton();
-	    btnTimer.setText("<HTML><u>Modo Temporizador<FONT color=\"#000099\"></FONT>"
+	    btnTimer.setText("<HTML><u>Timer Mode<FONT color=\"#000099\"></FONT>"
 	        + "<u></HTML>");
 	    btnTimer.setHorizontalAlignment(SwingConstants.LEFT);
 	    btnTimer.setBorderPainted(false);
@@ -146,7 +146,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 	    });
 	    
 	    JButton btnStats = new JButton();
-	    btnStats.setText("<HTML><u>Estadísticas<FONT color=\"#000099\"></FONT>"
+	    btnStats.setText("<HTML><u>Stats<FONT color=\"#000099\"></FONT>"
 	    		+ "<u></HTML>");
 	    btnStats.setHorizontalAlignment(SwingConstants.LEFT);
 	    btnStats.setBorderPainted(false);
@@ -173,7 +173,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 	    SimpleAttributeSet sa = new SimpleAttributeSet();
 		StyleConstants.setAlignment(sa, StyleConstants.ALIGN_JUSTIFIED);
 		
-		labelJugar = new JLabel("Cómo Jugar");
+		labelJugar = new JLabel("How to Play");
 		labelJugar.setAlignmentX(CENTER_ALIGNMENT);
 		labelJugar.setFont(new Font("Serif", Font.BOLD, frame.getWidth() / 12));
 		
@@ -184,13 +184,13 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 		descripcion.setForeground(new Color(48,48,48));
 		descripcion.setEditable(false);
 		descripcion.getStyledDocument().setParagraphAttributes(0, frame.getContentPane().getWidth() - 8, sa, false);
-		descripcion.setText("Empiezas desde la esquina de inicio seleccionada."
-				+ " Para progresar debes pulsar los botones de colores debajo del tablero. "
-				+ "Cuando cambias el color, "
-				+ "todos los cuadrados adyacentes también cambian de color. "
-				+ "Puedes utilizar los botones usando las teclas del teclado. Usa los números para los colores y la tecla R "
-				+ "para reiniciar. \n"
-				+ "Objetivo: Hacer que todo el cuadro sea del mismo color en el menor número de movimientos.");
+		descripcion.setText("You start from the selected start corner."
+				+ " To make progress you must click the buttons under the board. "
+				+ "When you change the color, "
+				+ "all adjacent squares of the same color will change too. "
+				+ "You can instead use your keyboard to change colors. Use numbers 1-6 for the colors and the R key "
+				+ "to restart. \n"
+				+ "Objective: Make the whole board be one color without runnning out of steps.");
 		descripcion.setPreferredSize(new Dimension(frame.getContentPane().getWidth(), (int) (descripcion.getPreferredSize().height * 5.5)));
 		
 		
@@ -218,7 +218,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 		caja3.add(labelFotoRestart);
 		caja3.add(Box.createHorizontalGlue());
 	  //-------------------------------------------------CAJA 4--------------------------------------------------------
-		labelConfig = new JLabel("Configuraciones");
+		labelConfig = new JLabel("Settings");
 		labelConfig.setAlignmentX(CENTER_ALIGNMENT);
 		labelConfig.setFont(new Font("Serif", Font.BOLD, frame.getWidth() / 12));
 		
@@ -230,17 +230,17 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 		descConfig.setEditable(false);
 		descConfig.setBackground(null);
 		descConfig.getStyledDocument().setParagraphAttributes(0, frame.getContentPane().getWidth() - 8, sa, false);
-		descConfig.setText("En Configuraciones podrás cambiar muchos parámetros para cambiar la dificultad y la apariencia. "
-				+ "Para acceder a Configuraciones puedes pulsar el bóton Config. en el inicio o hacer click derecho y pulsar Config."
+		descConfig.setText("In Settings you can change many parameters for personalized difficulty and look & feel. "
+				+ "To access Settings you can press the Settings button in the Menu or right-click and press Settings"
 				+ "\n\n\n\n\n\n"
-				+ "Allí podrás cambiar: \n\n"
-				+ "• La forma de las figuras \n"
-				+ "• El tamaño del cuadro \n"
-				+ "• La paleta de colores \n"
-				+ "• La esquina de inicio \n"
-				+ "• El sonido \n"
-				+ "• El Modo Temporizador \n"
-				+ "• Otras configuraciones avanzadas \n");
+				+ "There you are able to change: \n\n"
+				+ "• The figure's shape \n"
+				+ "• Board size \n"
+				+ "• Color pallete \n"
+				+ "• Start corner \n"
+				+ "• Toggle sound \n"
+				+ "• Timer Mode \n"
+				+ "• Other advanced settings \n");
 		descConfig.setPreferredSize(new Dimension(frame.getContentPane().getWidth(), (int) (descConfig.getPreferredSize().height * 1.3)));
 		
 		
@@ -248,7 +248,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 		caja4.add(labelConfig);
 		caja4.add(descConfig);
 		 //-------------------------------------------------CAJA 5--------------------------------------------------------
-		labelColores = new JLabel("Colores Personalizados");
+		labelColores = new JLabel("Custom Colors");
 		labelColores.setAlignmentX(CENTER_ALIGNMENT);
 		labelColores.setFont(new Font("Serif", Font.BOLD, frame.getWidth() / 12));
 		
@@ -260,16 +260,16 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 	    descColores.setForeground(new Color(48,48,48));
 	    descColores.setEditable(false);
 	    descColores.getStyledDocument().setParagraphAttributes(0, frame.getContentPane().getWidth() - 8, sa, false);
-	    descColores.setText("En Colores Personalizados pordrás crear tus propias paletas de colores para jugar. "
-	    		+ "Para ir a Colores Personalizados puedes pulsar en Elegir Colores Personalizados en Configuraciones o "
-	    		+ "puedes hacer click derecho y pulsar Colores P. "
-	    		+ "\n\n\n\n\n\n"
-	    		+ "Para crear una nueva paleta, simplemente pulsa en Crear nueva paleta y se desplegará una ventana donde "
-	    		+ "puedes elegir el primer color. Luego, presiona aceptar y se abrirá otra ventana para elegir el segundo color. "
-	    		+ "Repite este proceso hasta elegir los 6 colores de tu paleta. Luego, podrás elegir darle un nombre a la paleta "
-	    		+ "recién creada o dejar que quede con un nombre por defecto. Ten en cuenta que sólo puedes tener creadas 5 paletas "
-	    		+ "y que dentro de cada paleta no pueden haber colores repetidos ni vacíos. Recuerda seleccionar la paleta para "
-	    		+ "poder jugar con ella.");
+	    descColores.setText("In Custom Colors you can create your own unique color palletes to play with. "
+	    		+ "To access Custom Colors you can click on the Choose Custom Colors button in Settings or "
+	    		+ "you can right-click and press Custom Colors "
+	    		+ "\n\n\n\n\n\n\n"
+	    		+ "To create a new palette, just press the Create Palette button and a window will open where "
+	    		+ "you can pick the first color. Then, press Accept and another window will open for you to enter the second color. "
+	    		+ "Repeat this process until you choose the 6 colors of your palette. Finally, you can choose to name your palette "
+	    		+ "or leave it with a default-name. Keep in mind you can only store 5 palettes at the same time "
+	    		+ "and a palette cannot contain empty nor duplicate colors . Don't forget to select the palette "
+	    		+ "to play with it.");
 	    int height = (int) (descColores.getFont().getSize() * Toolkit.getDefaultToolkit().getScreenResolution() / 72.0);
 	    descColores.setPreferredSize(new Dimension(frame.getContentPane().getWidth(), (int) (height * (-0.0273 * frame.getWidth() + 24.4))));
 	    
@@ -281,7 +281,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 		caja5.add(descColores);
 		caja5.add(cajaLaminaColor);
 		//-------------------------------------------------CAJA 6--------------------------------------------------------
-		labelTimer = new JLabel("Modo Temporizador");
+		labelTimer = new JLabel("Timer Mode");
 		labelTimer.setAlignmentX(CENTER_ALIGNMENT);
 		labelTimer.setFont(new Font("Serif", Font.BOLD, frame.getWidth() / 12));
 		
@@ -293,9 +293,9 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 	    descTimer.setEditable(false);
 	    descTimer.setBackground(null);
 	    descTimer.getStyledDocument().setParagraphAttributes(0, frame.getContentPane().getWidth() - 8, sa, false);
-	    descTimer.setText("Cuando el Modo Temporizador está activado, el juego funcionará de la misma manera y con los mismos "
-	    		+ "movimientos, pero tendrás que intentar ganar sin que se acabe el tiempo. Para activar el Modo Temporizador pulsa "
-	    		+ "el reloj en Configuraciones.");
+	    descTimer.setText("When Timer Mode is on, the game will function the same and with the same amount of "
+	    		+ "steps, but you'll have to win before the time runs out. To activate it press "
+	    		+ "the little clock in Settings.");
 	    descTimer.setPreferredSize(new Dimension(frame.getContentPane().getWidth(), (int) (descTimer.getPreferredSize().height * 5.2)));
 		
 		
@@ -303,7 +303,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 		caja6.add(labelTimer);
 		caja6.add(descTimer);
 		//-------------------------------------------------CAJA 7--------------------------------------------------------
-		labelStats = new JLabel("Estadísticas");
+		labelStats = new JLabel("Stats");
 		labelStats.setAlignmentX(CENTER_ALIGNMENT);
 		labelStats.setFont(new Font("Serif", Font.BOLD, frame.getWidth() / 12));
 		
@@ -315,10 +315,10 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 	    descStats.setEditable(false);
 	    descStats.setBackground(null);
 	    descStats.getStyledDocument().setParagraphAttributes(0, frame.getContentPane().getWidth() - 8, sa, false);
-	    descStats.setText("En Estadísticas se almacena todo tu progreso. Allí podrás ver cuántas partidas has jugado, ganado,"
-	    		+ " perdido, tu mejor partida (menos movimientos), entre otros datos. Para acceder a Estadísticas haz click derecho"
-	    		+ " y pulsa Estadísticas. Si quieres cambiar el archivo donde se guardan las estadísticas, pulsa en el botón "
-	    		+ "Cambiar Archivo Est. en Configuraciones. El nuevo archivo tener extensión .txt y debe estar vacío.");
+	    descStats.setText("All your progress is stored in Stats. There you can see how many games you've played, won,"
+	    		+ " lost, your best game (less steps), and other data. To access your Stats right-click"
+	    		+ " and press Stats. If you'd like to change the file where the stats are stored, press the "
+	    		+ "Change Stats File button in Settings. The new file must have .txt extension and must be empty");
 	    descStats.setPreferredSize(new Dimension(frame.getContentPane().getWidth(), (int) (descStats.getPreferredSize().height * 8.1)));
 		
 		
@@ -326,7 +326,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 		caja7.add(labelStats);
 		caja7.add(descStats);
 	  //------------------------------------------------CAJA 8---------------------------------------------------------
-		JLabel labelCredito = new JLabel("Creado por");
+		JLabel labelCredito = new JLabel("Created by");
 		JLabel labelCreditoNom = new JLabel("✵ ✵ ✵ Jerónimo Squartini✵ ✵ ✵ ");
 		labelCredito.setAlignmentX(CENTER_ALIGNMENT);
 		labelCredito.setFont(new Font("Serif", Font.BOLD, frame.getWidth() / 17));
@@ -423,7 +423,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 	    scroll.setVerticalScrollBar(new JScrollBar(JScrollBar.VERTICAL, 100,50,0,400));
 	    add(scroll, BorderLayout.CENTER);
 	    
-		JButton btnVolver2 = new JButton("Volver");
+		JButton btnVolver2 = new JButton("Back");
 		btnVolver2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.cambiaLamina(Frame.PORTADA);
@@ -432,7 +432,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 		add(btnVolver2, BorderLayout.SOUTH);
 		//-------------------------------------------------POP UP MENU----------------------------------------------------
 		JPopupMenu menu = new JPopupMenu();
-		JMenuItem color = new JMenuItem("Colores P.");
+		JMenuItem color = new JMenuItem("Custom Colors");
 		color.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -440,7 +440,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 			}
 			
 		});
-		JMenuItem config = new JMenuItem("Config");
+		JMenuItem config = new JMenuItem("Settings");
 		config.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -448,7 +448,7 @@ public class LaminaTutorial extends JPanel implements MouseWheelListener{
 			}
 			
 		});
-		JMenuItem stats = new JMenuItem("Estadísticas");
+		JMenuItem stats = new JMenuItem("Stats");
 		stats.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {

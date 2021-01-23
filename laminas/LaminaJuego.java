@@ -121,14 +121,14 @@ public class LaminaJuego extends JPanel {
 	private void inicializaComponentesJuego() { 
 		//-------------------------------------LABEL MOV REST----------------------------------------
 		cajaNorth.removeAll();
-		ganaste = new JLabel("Ganaste!");
+		ganaste = new JLabel("You won!");
 		movs = new JLabel();
 		
-		JButton btnVolver = new JButton("Volver");
+		JButton btnVolver = new JButton("Back");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				timer.stop();
-				int opcion = JOptionPane.showOptionDialog(null, "¿Está seguro que quiere volver? Se reiniciará la partida actual.", "Aviso",
+				int opcion = JOptionPane.showOptionDialog(null, "Are you sure you want to go back to menu? Game will be lost.", "Warning",
 						JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 				if(opcion == 0) {
 					actualizaStats();
@@ -140,7 +140,7 @@ public class LaminaJuego extends JPanel {
 			}
 		});
 		labelMovRest = new JLabel(
-				"Movimientos Restantes: " + Integer.toString(movimientosRestantes));
+				"Remaining Steps: " + Integer.toString(movimientosRestantes));
 		labelMovRest.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		labelMovRest.setForeground(Color.BLACK);
 		labelMovRest.setFont(new Font("Roboto", Font.PLAIN, frame.getContentPane().getWidth() / 24));
@@ -311,12 +311,12 @@ public class LaminaJuego extends JPanel {
 			return;
 		timer.stop();
 		actualizaStats();
-		labelMovRest.setText("       Sin Movimientos!         ");
+		labelMovRest.setText("       No Steps Left!         ");
 		labelMovRest.setForeground(Color.RED);
-		String opciones[] = new String[] { "Reiniciar", "Volver al Menú", "Salir" };
+		String opciones[] = new String[] { "Restart", "Go back to Menu", "Exit" };
 		int opcion = -1;
 		do {
-			opcion = (int) JOptionPane.showOptionDialog(null, "Sin Movimientos!", "Aviso",
+			opcion = (int) JOptionPane.showOptionDialog(null, "No Steps Left!", "Warning",
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opciones,
 					null);
 		} while (opcion == -1);
@@ -352,7 +352,7 @@ public class LaminaJuego extends JPanel {
 		timer.stop();
 		actualizaStats();
 		lmnBtn.removeAll();
-		JButton btnReiniciar = new JButton("Reiniciar");
+		JButton btnReiniciar = new JButton("Restart");
 		btnReiniciar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -360,7 +360,7 @@ public class LaminaJuego extends JPanel {
 			}
 		});
 		lmnBtn.add(btnReiniciar);
-		JButton btnVolver = new JButton("Volver al Menú");
+		JButton btnVolver = new JButton("Go back to Menu");
 		btnVolver.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -368,7 +368,7 @@ public class LaminaJuego extends JPanel {
 			}
 		});
 		lmnBtn.add(btnVolver);
-		JButton btnSalir = new JButton("Salir");
+		JButton btnSalir = new JButton("Exit");
 		btnSalir.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -386,7 +386,7 @@ public class LaminaJuego extends JPanel {
 		juegoGanado = false;
 		ganaste.setForeground(isColorDark(colorACambiar) ? Color.WHITE : Color.BLACK.brighter());
 		ganaste.setFont(new Font("Roboto", Font.BOLD, frame.getContentPane().getWidth() / 7));
-		movs.setText("   Lo hiciste en " + (MOVIMIENTOS_INICIO - movimientosRestantes) + " movimientos");
+		movs.setText("           You did it in " + (MOVIMIENTOS_INICIO - movimientosRestantes) + " steps");
 		movs.setForeground(isColorDark(colorACambiar) ? Color.WHITE : Color.BLACK.brighter());
 		movs.setFont(new Font("Roboto", 3, frame.getContentPane().getWidth() / 25));
 		
@@ -423,7 +423,7 @@ public class LaminaJuego extends JPanel {
 			eliminaDuplicados(indexes); // añadir al ArrayList
 		}
 		movimientosRestantes--;
-		labelMovRest.setText("Movimientos Restantes: " + Integer.toString(movimientosRestantes));
+		labelMovRest.setText("Steps Left: " + Integer.toString(movimientosRestantes));
 		juegoGanado();
 		checkeaMovimientos();
 		repaint();
@@ -453,12 +453,12 @@ public class LaminaJuego extends JPanel {
 		if(quedaTiempo || !config.isTimerOn())
 			return;		
 		actualizaStats();
-		labelMovRest.setText("     Se acabó el Tiempo!        ");
+		labelMovRest.setText("     Time is Up!        ");
 		labelMovRest.setForeground(Color.RED);
-		String opciones[] = new String[] { "Reiniciar", "Volver al Menú", "Salir" };
+		String opciones[] = new String[] { "Restart", "Go back to Menu", "Exit" };
 		int opcion = -1;
 		do {
-			opcion = (int) JOptionPane.showOptionDialog(null, "Se acabó el Tiempo!", "Aviso",
+			opcion = (int) JOptionPane.showOptionDialog(null, "Time is Up!", "Warning",
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opciones,
 					null);
 		} while (opcion == -1);

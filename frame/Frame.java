@@ -73,17 +73,17 @@ public class Frame extends JFrame {
 			case CONFIG:
 				laminaConfig.actualizaBotones();
 				cargaLaminas.setViewportView(laminaConfig);
-				setTitle("Flood It | Configuraciones");
+				setTitle("Flood It | Settings");
 				break;
 			case COLORES:
 				cargaLaminas.setViewportView(laminaColores);
-				setTitle("Flood It | Colores Personalizados");
+				setTitle("Flood It | Custom Colors");
 				laminaColores.cargaSeleccion();
 				break;
 			case STATS:
 				cargaLaminas.setViewportView(laminaStats);
 				laminaStats.actualizaStats();
-				setTitle("Flood It | Estadísticas");
+				setTitle("Flood It | Stats");
 				break;
 			case TUTO:
 				cargaLaminas.setViewportView(laminaTutorial);

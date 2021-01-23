@@ -18,7 +18,7 @@ public class Main {
 			GraphiteLookAndFeel.setCurrentTheme(props);
 			UIManager.setLookAndFeel("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
 		} catch (Exception e) {
-			System.out.println("No se encontró la clase");
+			System.out.println("Class not Found");
 		}
 		Frame frame = new Frame();
 		frame.setVisible(true);

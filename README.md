@@ -10,3 +10,5 @@ using the JTattoo library for the app's looks.
 Most of the code variables, classes, comments, packages are in Spanish since I'm from Argentina. I have a version of it with all the strings translated to English, I just need to package it and push it.
 
 Thanks for reading!
+
+2021 edit: I finished this project more than a year ago, and I've found many more efficient, faster and simpler ways to make the game. If I was to re-code it, I would go for breadth-first-search (BFS) as the algorithm for detecting adjacent colors.
